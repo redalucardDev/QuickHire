@@ -9,7 +9,7 @@ To mark a package, you have to add a `package-info.java` file at the package roo
 
 ```java
 @{{ basePackage }}.SharedKernel
-package com.quickhire.quickhireapp;
+package com.quickhire.app;
 
 ```
 
@@ -17,6 +17,6 @@ or:
 
 ```java
 @{{ basePackage }}.BusinessContext
-package com.quickhire.quickhireapp;
+package com.quickhire.app;
 
 ```
