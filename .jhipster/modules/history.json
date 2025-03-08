@@ -99,5 +99,15 @@
       "endOfLine" : "lf",
       "indentSize" : 2
     }
+  }, {
+    "module" : "maven-java",
+    "date" : "2025-03-08T10:38:11.810036500Z",
+    "properties" : {
+      "packageName" : "com.quickhire.app",
+      "projectName" : "quickhire-app",
+      "baseName" : "quickhireapp",
+      "endOfLine" : "lf",
+      "indentSize" : 2
+    }
   } ]
 }
