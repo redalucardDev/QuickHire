@@ -49,5 +49,15 @@
       "endOfLine" : "lf",
       "indentSize" : 2
     }
+  }, {
+    "module" : "application-service-hexagonal-architecture-documentation",
+    "date" : "2025-03-08T10:37:41.259666700Z",
+    "properties" : {
+      "packageName" : "com.quickhire.quickhireapp",
+      "projectName" : "quickhireapp",
+      "baseName" : "quickhireapp",
+      "endOfLine" : "lf",
+      "indentSize" : 2
+    }
   } ]
 }
