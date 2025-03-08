@@ -29,5 +29,15 @@
       "endOfLine" : "lf",
       "indentSize" : 2
     }
+  }, {
+    "module" : "java-base",
+    "date" : "2025-03-08T10:31:57.650034100Z",
+    "properties" : {
+      "packageName" : "com.quickhire.quickhire-app",
+      "projectName" : "quickhireapp",
+      "baseName" : "quickhireapp",
+      "endOfLine" : "lf",
+      "indentSize" : 2
+    }
   } ]
 }
