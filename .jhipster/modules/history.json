@@ -1,0 +1,13 @@
+{
+  "actions" : [ {
+    "module" : "init",
+    "date" : "2025-03-08T10:31:56.483604900Z",
+    "properties" : {
+      "packageName" : "com.quickhire.quickhire-app",
+      "projectName" : "quickhireapp",
+      "baseName" : "quickhireapp",
+      "endOfLine" : "lf",
+      "indentSize" : 2
+    }
+  } ]
+}
