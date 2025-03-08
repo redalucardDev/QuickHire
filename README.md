@@ -1,12 +1,6 @@
-# quickhireapp
+# quickhire-app
 
 ## Prerequisites
-
-### Java
-
-You need to have Java 21:
-
-- [JDK 21](https://openjdk.java.net/projects/jdk/21/)
 
 ### Node.js and NPM
 
@@ -34,8 +28,5 @@ npm install
 
 ## Documentation
 
-- [Hexagonal architecture](documentation/hexagonal-architecture.md)
-- [Package types](documentation/package-types.md)
-- [Assertions](documentation/assertions.md)
 
 <!-- jhipster-needle-documentation -->
