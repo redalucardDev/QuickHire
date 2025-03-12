@@ -4,7 +4,7 @@ import com.quickhire.app.shared.error.domain.Assert;
 
 import java.util.UUID;
 
-public record ProspectId(UUID prospectId) {
+record ProspectId(UUID prospectId) {
   public ProspectId {
     Assert.notNull("prospectId", prospectId);
   }

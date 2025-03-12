@@ -11,13 +11,8 @@ class MessageApplicationService {
   }
 
   boolean sendMessage(Message message, MessageSendingMode messageSendingMode) {
-    return  messageSender.send(message, messageSendingMode);
+    return messageSender.send(message, messageSendingMode);
   }
-
-
-
-
-
 
 
 }

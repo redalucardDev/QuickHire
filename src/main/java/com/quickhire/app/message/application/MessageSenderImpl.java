@@ -5,17 +5,18 @@ import com.quickhire.app.message.secondary.EmailSender;
 import com.quickhire.app.message.secondary.EmailSenderStub;
 
 
+class MessageSenderImpl implements MessageSender {
 
-public class MessageSenderImpl implements MessageSender {
 
+  private final EmailSender emailSender = new EmailSenderStub();
 
-  private  final EmailSender emailSender = new EmailSenderStub();
-
-  public MessageSenderImpl(String senderContact) {
+  MessageSenderImpl(String senderContact) {
   }
 
 
+  @Override
   public boolean send(Message message, MessageSendingMode mode) {
+
     if (mode.equals(MessageSendingMode.EMAIL)) {
       return emailSender.send(message);
     }
