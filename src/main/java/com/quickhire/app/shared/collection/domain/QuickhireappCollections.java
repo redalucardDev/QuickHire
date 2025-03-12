@@ -68,7 +68,7 @@ public final class QuickhireappCollections {
    * Get an immutable map from the given map
    *
    * @param <K> Key type of this map
-   * @param <V> value type of this map
+   * @param <V> firstName type of this map
    * @return An immutable map
    */
   public static <K, V> Map<K, V> immutable(Map<? extends K, ? extends V> map) {
