@@ -12,8 +12,8 @@ public class MessageTest {
   void shouldGetMessage() {
 
     UUID id = UUID.randomUUID();
-    Message message = new Message(new MessageId(id), "Hello World", MessageStatus.PENDING);
-    assertThat(message).isEqualTo(new Message(new MessageId(id), "Hello World", MessageStatus.PENDING));
+    Message message = new Message(new MessageId(id), "This is a test message");
+    assertThat(message).isEqualTo(new Message(new MessageId(id), "This is a test message"));
 
   }
 
