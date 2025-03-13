@@ -2,9 +2,8 @@ package com.quickhire.app.message.application;
 
 import com.quickhire.app.message.domain.Message;
 import com.quickhire.app.message.domain.providers.MessageSender;
-import com.quickhire.app.message.domain.MessageSendingMode;
 
-class MessageApplicationService {
+public class MessageApplicationService {
 
   private final MessageSender messageSender;
 
@@ -12,7 +11,7 @@ class MessageApplicationService {
     this.messageSender = messageSender;
   }
 
-  boolean sendMessage(Message message, MessageSendingMode messageSendingMode) {
+  boolean sendMessage(Message message, Message.MessageSendingMode messageSendingMode) {
     return messageSender.send(message, messageSendingMode);
   }
 

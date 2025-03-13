@@ -26,7 +26,7 @@ public class MessageTest {
 
   private static Message expectedMessage(UUID id, UUID recipientId) {
     return new Message(new MessageId(id)
-      , new Template(new Body("This is a test message"), new Signature("This is a test signature")), new RecipientId(recipientId));
+      , new Template(new Template.Body("This is a test message"), new Template.Signature("This is a test signature")), new RecipientId(recipientId));
   }
 
 
@@ -34,7 +34,7 @@ public class MessageTest {
   void shouldSendMessage() {
     UUID id = UUID.randomUUID();
     Message message = MessageProvider.createMessage(id, UUID.randomUUID());
-    assertThat(emailMessageSenderStub.send(message, MessageSendingMode.EMAIL)).isTrue();
+    assertThat(emailMessageSenderStub.send(message, Message.MessageSendingMode.EMAIL)).isTrue();
   }
 
 

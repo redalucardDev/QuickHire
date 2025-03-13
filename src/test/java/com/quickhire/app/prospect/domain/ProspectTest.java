@@ -2,8 +2,7 @@ package com.quickhire.app.prospect.domain;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.UUID;
-
+import static com.quickhire.app.prospect.providers.ProspectProvider.createProspect;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -16,10 +15,10 @@ class ProspectTest {
 
     assertThat(prospect.contactInfo()).isEqualTo(
       new ContactInfo(
-        new FirstName("John"),
-        new LastName("Doe"),
-        new Email("john.doe@gmail.com"),
-        new PhoneNumber("+33662887766")
+        new ContactInfo.FirstName("John"),
+        new ContactInfo.LastName("Doe"),
+        new ContactInfo.Email("john.doe@gmail.com"),
+        new ContactInfo.PhoneNumber("+33662887766")
       ));
   }
 
@@ -39,17 +38,8 @@ class ProspectTest {
   }
 
 
-  private static Prospect createProspect(String emailString, String phoneNumber) {
 
-    return new Prospect(
-      new ProspectId(UUID.randomUUID()),
-      new ContactInfo(
-      new FirstName("John"),
-      new LastName("Doe"),
-      new Email(emailString),
-      new PhoneNumber(phoneNumber)));
 
-  }
 
 
 }
