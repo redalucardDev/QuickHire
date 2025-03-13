@@ -1,4 +1,4 @@
 package com.quickhire.app.message.domain;
 
-public record Template(String body, String signature) {
+public record Template(Body body, Signature signature) {
 }

@@ -7,7 +7,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ProspectTest {
+class ProspectTest {
 
   @Test
   void shouldGetProspect() {
@@ -22,7 +22,6 @@ public class ProspectTest {
         new PhoneNumber("+33662887766")
       ));
   }
-
 
   @Test
   void shouldNotGetProspectWithInvalidEmail() {

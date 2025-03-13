@@ -26,7 +26,7 @@ public class MessageTest {
 
   private static Message expectedMessage(UUID id, UUID recipientId) {
     return new Message(new MessageId(id)
-      , new Template("This is a test message", "This is a test signature"), new RecipientId(recipientId));
+      , new Template(new Body("This is a test message"), new Signature("This is a test signature")), new RecipientId(recipientId));
   }
 
 
