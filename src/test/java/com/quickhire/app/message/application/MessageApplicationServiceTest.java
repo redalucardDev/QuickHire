@@ -23,7 +23,7 @@ class MessageApplicationServiceTest {
 
     MessageApplicationService messageApplicationService = new MessageApplicationService(emailMessageSenderStub);
 
-    boolean messageIsSent = messageApplicationService.sendMessage(message, MessageSendingMode.EMAIL);
+    boolean messageIsSent = messageApplicationService.sendMessage(message, Message.MessageSendingMode.EMAIL);
 
     assertThat(messageIsSent).isTrue();
 
