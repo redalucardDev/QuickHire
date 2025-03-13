@@ -10,7 +10,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class MessageApplicationServiceTest {
 
-  private final MessageSender fakeEmailMessageSender = new MessageSenderImpl("test@test.com");
+  private final MessageSender fakeEmailMessageSender = new MessageSenderImpl("sender@test.com", "receiver@test.com");
 
   @Test
   void shouldSendMessageByEmail() {

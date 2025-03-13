@@ -9,8 +9,12 @@ class MessageSenderImpl implements MessageSender {
 
 
   private final EmailSender emailSender = new EmailSenderStub();
+  private final String sender;
+  private final String receiver;
 
-  MessageSenderImpl(String senderContact) {
+  MessageSenderImpl(String sender, String receiver) {
+    this.sender = sender;
+    this.receiver = receiver;
   }
 
 
@@ -18,7 +22,7 @@ class MessageSenderImpl implements MessageSender {
   public boolean send(Message message, MessageSendingMode mode) {
 
     if (mode.equals(MessageSendingMode.EMAIL)) {
-      return emailSender.send(message);
+      return emailSender.send(message, sender, receiver);
     }
 
     return false;

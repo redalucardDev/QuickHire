@@ -6,7 +6,7 @@ public class EmailSenderStub implements EmailSender {
 
 
   @Override
-  public boolean send(Message message) {
+  public boolean send(Message message, String senderEmail, String receiverEmail) {
     return true;
   }
 }
