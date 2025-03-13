@@ -1,6 +1,8 @@
 package com.quickhire.app.message.application;
 
 import com.quickhire.app.message.domain.Message;
+import com.quickhire.app.message.domain.providers.MessageSender;
+import com.quickhire.app.message.domain.MessageSendingMode;
 
 class MessageApplicationService {
 
