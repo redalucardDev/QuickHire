@@ -10,7 +10,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class MessageApplicationServiceTest {
+class MessageApplicationServiceTest {
 
   private final MessageSender emailMessageSenderStub = new MessageSenderImpl(
     "sender@test.com", "receiver@test.com");

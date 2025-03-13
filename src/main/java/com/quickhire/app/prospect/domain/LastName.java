@@ -4,7 +4,7 @@ import com.quickhire.app.shared.error.domain.Assert;
 
 record LastName(String lastName) {
 
-    public LastName {
+    LastName {
       Assert.notBlank("lastName", lastName);
 
     }
