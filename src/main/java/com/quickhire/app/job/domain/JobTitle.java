@@ -1,11 +1,11 @@
 package com.quickhire.app.job.domain;
 
-record JobTitle(String title) {
+import com.quickhire.app.shared.error.domain.Assert;
 
-  JobTitle {
-    if (title.isBlank()) {
-      throw new IllegalArgumentException("Job title must not be blank");
-    }
+public record JobTitle(String title) {
+
+  public JobTitle {
+    Assert.notBlank("title", title);
   }
 
 }

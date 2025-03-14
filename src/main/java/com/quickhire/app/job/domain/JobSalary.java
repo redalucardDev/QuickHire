@@ -4,9 +4,9 @@ import com.quickhire.app.shared.error.domain.Assert;
 
 import java.math.BigDecimal;
 
-record JobSalary(BigDecimal salary) {
+public record JobSalary(BigDecimal salary) {
 
-  JobSalary {
+  public JobSalary {
     Assert.notNull("salary", salary);
   }
 }

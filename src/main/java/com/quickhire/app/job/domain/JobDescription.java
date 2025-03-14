@@ -2,9 +2,9 @@ package com.quickhire.app.job.domain;
 
 import com.quickhire.app.shared.error.domain.Assert;
 
-record JobDescription(String description) {
+public record JobDescription(String description) {
 
-  JobDescription {
+  public JobDescription {
     Assert.notNull("description", description);
   }
 }
