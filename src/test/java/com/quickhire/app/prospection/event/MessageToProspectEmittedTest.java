@@ -1,4 +1,4 @@
-package com.quickhire.app.prospection.domain.event;
+package com.quickhire.app.prospection.event;
 
 import com.quickhire.app.message.domain.MessageId;
 import com.quickhire.app.prospect.domain.ProspectId;

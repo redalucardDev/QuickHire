@@ -8,10 +8,10 @@ import java.util.UUID;
 public class MessageProvider {
 
 
-  public static Message createMessage(UUID id, UUID recipientId) {
+  public static Message createMessage(UUID id) {
 
     return new Message(new MessageId(id)
-      , new Template(new Body("This is a test message"), new Signature("This is a test signature")), new RecipientId(recipientId));
+      , new Template(new Body("This is a test message"), new Signature("This is a test signature")));
 
   }
 }

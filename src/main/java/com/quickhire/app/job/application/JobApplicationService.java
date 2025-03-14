@@ -13,8 +13,9 @@ public class JobApplicationService {
     this.jobRepository = jobRepository;
   }
 
-  public void create(Job job) {
+  public Job create(Job job) {
       jobRepository.save(job);
+      return job;
   }
 
   public Job getJobBy(JobId jobId) {

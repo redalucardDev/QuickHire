@@ -3,7 +3,7 @@ package com.quickhire.app.prospection.domain;
 import com.quickhire.app.job.domain.JobId;
 import com.quickhire.app.message.domain.MessageId;
 import com.quickhire.app.prospect.domain.ProspectId;
-import com.quickhire.app.prospection.domain.event.MessageToProspectEmitted;
+import com.quickhire.app.prospection.event.MessageToProspectEmitted;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ class ProspectionTest {
 
     assertThat(prospection)
       .isEqualTo(new Prospection(prospectionId, jobId, messageId, new ArrayList<>()));
+
   }
 
 
@@ -41,7 +42,7 @@ class ProspectionTest {
 
     assertThat(prospection.prospectionId()).isEqualTo(prospectionId);
     assertThat(prospection.sendMessageTo(List.of(prospectId)).messageId()).isEqualTo(
-    messageId);
+      messageId);
     assertThat(prospection.messageToProspectEmittedEvents()).containsExactly(
       new MessageToProspectEmitted(prospectId, messageId));
 

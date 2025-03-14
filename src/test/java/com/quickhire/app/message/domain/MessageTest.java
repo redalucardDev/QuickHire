@@ -18,22 +18,17 @@ public class MessageTest {
   void shouldGetMessage() {
 
     UUID id = UUID.randomUUID();
-    UUID recipientId = UUID.randomUUID();
-    Message message = MessageProvider.createMessage(id, recipientId);
-    assertThat(message).isEqualTo(expectedMessage(id, recipientId));
+    Message message = MessageProvider.createMessage(id);
+    assertThat(message).isEqualTo(new Message(new MessageId(id)
+      , new Template(new Template.Body("This is a test message"), new Template.Signature("This is a test signature"))));
 
-  }
-
-  private static Message expectedMessage(UUID id, UUID recipientId) {
-    return new Message(new MessageId(id)
-      , new Template(new Template.Body("This is a test message"), new Template.Signature("This is a test signature")), new RecipientId(recipientId));
   }
 
 
   @Test
   void shouldSendMessage() {
     UUID id = UUID.randomUUID();
-    Message message = MessageProvider.createMessage(id, UUID.randomUUID());
+    Message message = MessageProvider.createMessage(id);
     assertThat(emailMessageSenderStub.send(message, Message.MessageSendingMode.EMAIL)).isTrue();
   }
 
