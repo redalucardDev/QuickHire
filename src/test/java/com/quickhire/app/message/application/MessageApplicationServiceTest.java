@@ -1,6 +1,6 @@
 package com.quickhire.app.message.application;
 
-import com.quickhire.app.message.domain.*;
+import com.quickhire.app.message.domain.Message;
 import com.quickhire.app.message.domain.providers.MessageSender;
 import com.quickhire.app.message.domain.repositories.MessageRepository;
 import com.quickhire.app.message.infrastructure.secondary.providers.MessageSenderImpl;
@@ -30,7 +30,8 @@ class MessageApplicationServiceTest {
     Message message = MessageProvider.createMessage(id);
 
     assertThat(messageApplicationService.create(message)).isEqualTo(new Message(message.messageId(), message.body()));
-    assertThat(messageRepository.findById(message.messageId())).isEqualTo(new Message(message.messageId(), message.body()));
+    assertThat(messageRepository.findById(message.messageId()).isPresent()).isTrue();
+    assertThat(messageRepository.findById(message.messageId()).get()).isEqualTo(new Message(message.messageId(), message.body()));
 
   }
 
@@ -42,7 +43,6 @@ class MessageApplicationServiceTest {
     boolean messageIsSent = messageApplicationService.sendMessage(message, Message.MessageSendingMode.EMAIL);
 
     assertThat(messageIsSent).isTrue();
-
 
   }
 }

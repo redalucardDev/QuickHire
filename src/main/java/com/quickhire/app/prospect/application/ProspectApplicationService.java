@@ -1,7 +1,10 @@
 package com.quickhire.app.prospect.application;
 
 import com.quickhire.app.prospect.domain.Prospect;
+import com.quickhire.app.prospect.domain.ProspectId;
 import com.quickhire.app.prospect.domain.repositories.ProspectRepository;
+
+import java.util.NoSuchElementException;
 
 public class ProspectApplicationService {
 
@@ -13,5 +16,9 @@ public class ProspectApplicationService {
   public Prospect create(Prospect prospect) {
       prospectRepository.save(prospect);
       return prospect;
+  }
+
+  public Prospect getProspectBy(ProspectId prospectId) {
+    return prospectRepository.findById(prospectId).orElseThrow(() -> new NoSuchElementException("Prospect not found"));
   }
 }

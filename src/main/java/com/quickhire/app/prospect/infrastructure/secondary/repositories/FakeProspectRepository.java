@@ -6,18 +6,19 @@ import com.quickhire.app.prospect.domain.repositories.ProspectRepository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class FakeProspectRepository implements ProspectRepository {
 
-  private final Map<ProspectId, Prospect> prospects = new HashMap<>();
+  private final Map<ProspectId, Optional<Prospect>> prospects = new HashMap<>();
 
   @Override
   public void save(Prospect prospect) {
-    prospects.put(prospect.prospectId(), prospect);
+    prospects.put(prospect.prospectId(), Optional.of(prospect));
   }
 
   @Override
-  public Prospect findById(ProspectId prospectId) {
-    return prospects.get(prospectId);
+  public Optional<Prospect> findById(ProspectId prospectId) {
+    return prospects.getOrDefault(prospectId, Optional.empty());
   }
 }

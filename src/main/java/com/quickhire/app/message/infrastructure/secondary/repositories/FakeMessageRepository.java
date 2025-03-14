@@ -6,18 +6,19 @@ import com.quickhire.app.message.domain.repositories.MessageRepository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class FakeMessageRepository implements MessageRepository {
 
-  Map<MessageId, Message> messages = new HashMap<>();
+  Map<MessageId, Optional<Message>> messages = new HashMap<>();
 
   @Override
   public void save(Message message) {
-      messages.put(message.messageId(), message);
+      messages.put(message.messageId(), Optional.of(message));
   }
 
   @Override
-  public Message findById(MessageId messageId) {
-    return messages.get(messageId);
+  public Optional<Message> findById(MessageId messageId) {
+    return messages.getOrDefault(messageId, Optional.empty());
   }
 }
