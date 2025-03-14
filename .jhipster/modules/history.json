@@ -119,5 +119,16 @@
       "endOfLine" : "lf",
       "indentSize" : 2
     }
+  }, {
+    "module" : "prettier",
+    "date" : "2025-03-14T18:47:54.622333900Z",
+    "properties" : {
+      "packageName" : "com.quickhire.app",
+      "projectName" : "quickhireapp",
+      "baseName" : "quickhireapp",
+      "endOfLine" : "lf",
+      "indentSize" : 2,
+      "springConfigurationFormat" : "yaml"
+    }
   } ]
 }
