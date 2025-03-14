@@ -130,5 +130,16 @@
       "indentSize" : 2,
       "springConfigurationFormat" : "yaml"
     }
+  }, {
+    "module" : "jacoco-with-min-coverage-check",
+    "date" : "2025-03-14T18:49:47.198835400Z",
+    "properties" : {
+      "packageName" : "com.quickhire.app",
+      "projectName" : "quickhireapp",
+      "baseName" : "quickhireapp",
+      "endOfLine" : "lf",
+      "indentSize" : 2,
+      "springConfigurationFormat" : "yaml"
+    }
   } ]
 }
