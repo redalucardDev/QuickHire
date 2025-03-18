@@ -31,7 +31,7 @@ public record ContactInfo(FirstName firstName, LastName lastName, Email email, P
 
   public record Email(String email) {
     public Email {
-      if (!email.matches("([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})") && !email.isBlank()) {
+      if (!email.matches("([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-]+)\\.([a-zA-Z]{2,5})") && !email.isBlank()) {
         throw new IllegalArgumentException("Invalid email");
       }
     }
