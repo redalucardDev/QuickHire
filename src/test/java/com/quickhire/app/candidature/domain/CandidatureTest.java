@@ -2,14 +2,13 @@ package com.quickhire.app.candidature.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class CandidatureTest {
 
   @Test
-  @Disabled
   public void shouldGetACandidature() {
     Candidate.CandidateId candidateId = new Candidate.CandidateId(UUID.randomUUID());
     Candidature.JobId jobId = new Candidature.JobId(UUID.randomUUID());
@@ -17,8 +16,25 @@ public class CandidatureTest {
 
     CandidateResponse candidateResponse = new CandidateResponse("I am highly interested in this position");
 
-    Candidature candidature = new Candidature(candidatureId, jobId, candidateId, candidateResponse);
+    LocalDateTime candidatureCreationDateTime = LocalDateTime.now();
+    Candidature candidature = new Candidature(
+      candidatureId,
+      jobId,
+      candidateId,
+      candidateResponse,
+      CandidatureStatus.WAITING,
+      new Candidature.CreatedAt(candidatureCreationDateTime)
+    );
 
-    assertThat(candidature).isEqualTo(new Candidature(candidatureId, jobId, candidateId, candidateResponse));
+    assertThat(candidature).isEqualTo(
+      new Candidature(
+        candidatureId,
+        jobId,
+        candidateId,
+        candidateResponse,
+        CandidatureStatus.WAITING,
+        new Candidature.CreatedAt(candidatureCreationDateTime)
+      )
+    );
   }
 }
