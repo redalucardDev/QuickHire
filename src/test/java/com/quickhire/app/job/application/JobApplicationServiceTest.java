@@ -18,7 +18,7 @@ public class JobApplicationServiceTest {
 
   @Test
   void shouldGetJob() {
-    JobId jobId = new JobId(UUID.randomUUID());
+    Job.JobId jobId = new Job.JobId(UUID.randomUUID());
     JobTitle jobTitle = new JobTitle("Software Engineer");
     JobDetails jobDetails = new JobDetails(new JobSalary(BigDecimal.valueOf(100))
       , new JobDescription("Java Developer")

@@ -1,4 +1,4 @@
-package com.quickhire.app.prospect.domain;
+package com.quickhire.app.shared.contactInfo.domain;
 
 import com.quickhire.app.shared.error.domain.Assert;
 

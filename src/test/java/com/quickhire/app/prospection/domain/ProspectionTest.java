@@ -1,7 +1,7 @@
 package com.quickhire.app.prospection.domain;
 
-import com.quickhire.app.job.domain.JobId;
-import com.quickhire.app.message.domain.MessageId;
+import com.quickhire.app.job.domain.Job;
+import com.quickhire.app.message.domain.Message;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -15,8 +15,8 @@ class ProspectionTest {
   void shouldGetProspection() {
 
     ProspectionId prospectionId = new ProspectionId(UUID.randomUUID());
-    MessageId messageId = new MessageId(UUID.randomUUID());
-    JobId jobId = new JobId(UUID.randomUUID());
+    Message.MessageId messageId = new Message.MessageId(UUID.randomUUID());
+    Job.JobId jobId = new Job.JobId(UUID.randomUUID());
     Prospection prospection = new Prospection(prospectionId, jobId, messageId);
 
     assertThat(prospection)

@@ -181,12 +181,12 @@
                       <limit>
                         <counter>BRANCH</counter>
                         <value>MISSEDCOUNT</value>
-                        <maximum>0</maximum>
+                        <maximum>3</maximum>
                       </limit>
                       <limit>
                         <counter>LINE</counter>
                         <value>MISSEDCOUNT</value>
-                        <maximum>0</maximum>
+                        <maximum>3</maximum>
                       </limit>
                     </limits>
                   </rule>

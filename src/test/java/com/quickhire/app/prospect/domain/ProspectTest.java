@@ -1,5 +1,6 @@
 package com.quickhire.app.prospect.domain;
 
+import com.quickhire.app.shared.contactInfo.domain.ContactInfo;
 import org.junit.jupiter.api.Test;
 
 import static com.quickhire.app.prospect.providers.ProspectProvider.createProspect;

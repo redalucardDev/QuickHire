@@ -1,6 +1,6 @@
 package com.quickhire.app.prospect.application;
 
-import com.quickhire.app.prospect.domain.ContactInfo;
+import com.quickhire.app.shared.contactInfo.domain.ContactInfo;
 import com.quickhire.app.prospect.domain.Prospect;
 import com.quickhire.app.prospect.domain.repositories.ProspectRepository;
 import com.quickhire.app.prospect.infrastructure.secondary.repositories.FakeProspectRepository;

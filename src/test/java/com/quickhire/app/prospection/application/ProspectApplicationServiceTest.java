@@ -3,18 +3,15 @@ package com.quickhire.app.prospection.application;
 
 import com.quickhire.app.job.application.JobApplicationService;
 import com.quickhire.app.job.domain.Job;
-import com.quickhire.app.job.domain.JobId;
 import com.quickhire.app.job.infrastructure.secondary.repositories.FakeJobRepository;
 import com.quickhire.app.job.providers.JobProvider;
 import com.quickhire.app.message.application.MessageApplicationService;
 import com.quickhire.app.message.domain.Message;
-import com.quickhire.app.message.domain.MessageId;
 import com.quickhire.app.message.infrastructure.secondary.providers.MessageSenderImpl;
 import com.quickhire.app.message.infrastructure.secondary.repositories.FakeMessageRepository;
 import com.quickhire.app.message.providers.MessageProvider;
 import com.quickhire.app.prospect.application.ProspectApplicationService;
 import com.quickhire.app.prospect.domain.Prospect;
-import com.quickhire.app.prospect.domain.ProspectId;
 import com.quickhire.app.prospect.infrastructure.secondary.repositories.FakeProspectRepository;
 import com.quickhire.app.prospection.domain.Prospection;
 import com.quickhire.app.prospection.domain.ProspectionId;
@@ -50,7 +47,7 @@ public class ProspectApplicationServiceTest {
 
     Prospection prospection = createProspection(prospectId, jobId, messageId);
 
-    Prospection expectedProspection = new Prospection(prospection.prospectionId(), new JobId(jobId), new MessageId(messageId));
+    Prospection expectedProspection = new Prospection(prospection.prospectionId(), new Job.JobId(jobId), new Message.MessageId(messageId));
 
     assertThat(prospectionApplicationService.create(prospection)).isEqualTo(expectedProspection);
 
@@ -64,7 +61,7 @@ public class ProspectApplicationServiceTest {
   @Test
   void shouldSendProspectionToProspect() {
 
-    ProspectId prospectId = new ProspectId(UUID.randomUUID());
+    Prospect.ProspectId prospectId = new Prospect.ProspectId(UUID.randomUUID());
 
     Prospection prospection = createProspection(prospectId.prospectId(), UUID.randomUUID(), UUID.randomUUID());
 
@@ -77,13 +74,13 @@ public class ProspectApplicationServiceTest {
     Prospect prospect = createProspect("john.doe@gmail.com", "+33662887766");
     prospectApplicationService.create(prospect);
 
-    Job job = JobProvider.createJob();
+    Job job = JobProvider.createJob(UUID.randomUUID());
     jobApplicationService.create(job);
 
     Message message = MessageProvider.createMessage(UUID.randomUUID());
     messageApplicationService.create(message);
 
-    return new Prospection(new ProspectionId(prospectId), new JobId(jobId), new MessageId(messageId));
+    return new Prospection(new ProspectionId(prospectId), new Job.JobId(jobId), new Message.MessageId(messageId));
   }
 
 }

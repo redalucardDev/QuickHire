@@ -10,7 +10,7 @@ public class MessageProvider {
 
   public static Message createMessage(UUID id) {
 
-    return new Message(new MessageId(id)
+    return new Message(new Message.MessageId(id)
       , new Template(new Body("This is a test message"), new Signature("This is a test signature")));
 
   }

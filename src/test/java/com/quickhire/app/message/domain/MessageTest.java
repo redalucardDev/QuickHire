@@ -19,7 +19,7 @@ public class MessageTest {
 
     UUID id = UUID.randomUUID();
     Message message = MessageProvider.createMessage(id);
-    assertThat(message).isEqualTo(new Message(new MessageId(id)
+    assertThat(message).isEqualTo(new Message(new Message.MessageId(id)
       , new Template(new Template.Body("This is a test message"), new Template.Signature("This is a test signature"))));
 
   }

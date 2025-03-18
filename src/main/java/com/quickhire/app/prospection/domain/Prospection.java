@@ -1,10 +1,10 @@
 package com.quickhire.app.prospection.domain;
 
-import com.quickhire.app.job.domain.JobId;
-import com.quickhire.app.message.domain.MessageId;
+import com.quickhire.app.job.domain.Job;
+import com.quickhire.app.message.domain.Message;
 
 
-public record Prospection(ProspectionId prospectionId, JobId jobId, MessageId messageId) {
+public record Prospection(ProspectionId prospectionId, Job.JobId jobId, Message.MessageId messageId) {
 
 }
 

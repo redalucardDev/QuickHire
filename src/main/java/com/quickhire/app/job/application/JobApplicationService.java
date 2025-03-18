@@ -1,7 +1,6 @@
 package com.quickhire.app.job.application;
 
 import com.quickhire.app.job.domain.Job;
-import com.quickhire.app.job.domain.JobId;
 import com.quickhire.app.job.domain.repositories.JobRepository;
 
 import java.util.NoSuchElementException;
@@ -20,7 +19,7 @@ public class JobApplicationService {
     return job;
   }
 
-  public Job getJobBy(JobId jobId) {
+  public Job getJobBy(Job.JobId jobId) {
     return jobRepository.findById(jobId).orElseThrow(() -> new NoSuchElementException("Job not found"));
   }
 }
