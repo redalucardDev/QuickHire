@@ -8,5 +8,4 @@ public record JobDetails(JobSalary jobSalary, JobDescription jobDescription, Job
     Assert.notNull("jobDescription", jobDescription);
     Assert.notNull("jobLocation", jobLocation);
   }
-
 }

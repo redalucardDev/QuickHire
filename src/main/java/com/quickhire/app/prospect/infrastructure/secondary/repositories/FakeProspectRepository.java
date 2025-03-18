@@ -2,7 +2,6 @@ package com.quickhire.app.prospect.infrastructure.secondary.repositories;
 
 import com.quickhire.app.prospect.domain.Prospect;
 import com.quickhire.app.prospect.domain.repositories.ProspectRepository;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

@@ -12,14 +12,11 @@ public class MessageApplicationService {
   public MessageApplicationService(MessageRepository messageRepository, MessageSender messageSender) {
     this.messageRepository = messageRepository;
     this.messageSender = messageSender;
-
   }
-
 
   boolean sendMessage(Message message, Message.MessageSendingMode messageSendingMode) {
     return messageSender.send(message, messageSendingMode);
   }
-
 
   public Message create(Message message) {
     messageRepository.save(message);

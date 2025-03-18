@@ -1,5 +1,7 @@
 package com.quickhire.app.prospection.application;
 
+import static com.quickhire.app.prospect.providers.ProspectProvider.createProspect;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import com.quickhire.app.job.application.JobApplicationService;
 import com.quickhire.app.job.domain.Job;
@@ -17,30 +19,26 @@ import com.quickhire.app.prospection.domain.Prospection;
 import com.quickhire.app.prospection.domain.ProspectionId;
 import com.quickhire.app.prospection.domain.repositories.ProspectionRepository;
 import com.quickhire.app.prospection.infrastructure.secondary.repositories.FakeProspectionRepository;
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.UUID;
-
-import static com.quickhire.app.prospect.providers.ProspectProvider.createProspect;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import org.junit.jupiter.api.Test;
 
 public class ProspectApplicationServiceTest {
-
 
   private final ProspectApplicationService prospectApplicationService = new ProspectApplicationService(new FakeProspectRepository());
 
   private final JobApplicationService jobApplicationService = new JobApplicationService(new FakeJobRepository());
 
   private final MessageApplicationService messageApplicationService = new MessageApplicationService(
-    new FakeMessageRepository(), new MessageSenderImpl("sender@test.com", "receiver@test.com"));
+    new FakeMessageRepository(),
+    new MessageSenderImpl("sender@test.com", "receiver@test.com")
+  );
 
   private final ProspectionRepository prospectionRepository = new FakeProspectionRepository();
   private final ProspectionApplicationService prospectionApplicationService = new ProspectionApplicationService(prospectionRepository);
 
   @Test
   void shouldGetProspection() {
-
     UUID prospectId = UUID.randomUUID();
     UUID messageId = UUID.randomUUID();
     UUID jobId = UUID.randomUUID();
@@ -51,16 +49,12 @@ public class ProspectApplicationServiceTest {
 
     assertThat(prospectionApplicationService.create(prospection)).isEqualTo(expectedProspection);
 
-
     assertThat(prospectionRepository.findById(prospection.prospectionId()).isPresent()).isTrue();
     assertThat(prospectionRepository.findById(prospection.prospectionId()).get()).isEqualTo(expectedProspection);
-
   }
-
 
   @Test
   void shouldSendProspectionToProspect() {
-
     Prospect.ProspectId prospectId = new Prospect.ProspectId(UUID.randomUUID());
 
     Prospection prospection = createProspection(prospectId.prospectId(), UUID.randomUUID(), UUID.randomUUID());
@@ -82,5 +76,4 @@ public class ProspectApplicationServiceTest {
 
     return new Prospection(new ProspectionId(prospectId), new Job.JobId(jobId), new Message.MessageId(messageId));
   }
-
 }

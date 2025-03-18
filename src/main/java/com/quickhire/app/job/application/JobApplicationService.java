@@ -2,11 +2,9 @@ package com.quickhire.app.job.application;
 
 import com.quickhire.app.job.domain.Job;
 import com.quickhire.app.job.domain.repositories.JobRepository;
-
 import java.util.NoSuchElementException;
 
 public class JobApplicationService {
-
 
   private final JobRepository jobRepository;
 

@@ -2,7 +2,6 @@ package com.quickhire.app.job.infrastructure.secondary.repositories;
 
 import com.quickhire.app.job.domain.Job;
 import com.quickhire.app.job.domain.repositories.JobRepository;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

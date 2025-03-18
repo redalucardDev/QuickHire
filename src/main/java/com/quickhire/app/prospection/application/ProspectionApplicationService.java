@@ -5,7 +5,6 @@ import com.quickhire.app.prospection.domain.Prospection;
 import com.quickhire.app.prospection.domain.ProspectionId;
 import com.quickhire.app.prospection.domain.repositories.ProspectionRepository;
 import com.quickhire.app.prospection.event.MessageToProspectEmitted;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -26,7 +25,10 @@ public class ProspectionApplicationService {
   }
 
   public void sendProspectionToProspects(ProspectionId prospectionId, List<Prospect.ProspectId> prospectIds) {
-    Prospection prospection = prospectionRepository.findById(prospectionId).orElseThrow(() -> new NoSuchElementException("Prospection not found"));
-    prospectIds.forEach(prospectId -> messageToProspectEmittedEvents.add(new MessageToProspectEmitted(prospectId, prospection.messageId())));
+    Prospection prospection = prospectionRepository
+      .findById(prospectionId)
+      .orElseThrow(() -> new NoSuchElementException("Prospection not found"));
+    prospectIds.forEach(prospectId -> messageToProspectEmittedEvents.add(new MessageToProspectEmitted(prospectId, prospection.messageId()))
+    );
   }
 }

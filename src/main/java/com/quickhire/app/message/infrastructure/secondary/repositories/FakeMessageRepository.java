@@ -2,7 +2,6 @@ package com.quickhire.app.message.infrastructure.secondary.repositories;
 
 import com.quickhire.app.message.domain.Message;
 import com.quickhire.app.message.domain.repositories.MessageRepository;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -13,7 +12,7 @@ public class FakeMessageRepository implements MessageRepository {
 
   @Override
   public void save(Message message) {
-      messages.put(message.messageId(), Optional.of(message));
+    messages.put(message.messageId(), Optional.of(message));
   }
 
   @Override
