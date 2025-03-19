@@ -165,5 +165,17 @@
       "springConfigurationFormat" : "yaml",
       "serverPort" : 8080
     }
+  }, {
+    "module" : "spring-boot-mvc-empty",
+    "date" : "2025-03-19T14:17:17.737263700Z",
+    "properties" : {
+      "packageName" : "com.quickhire.app",
+      "projectName" : "quickhireapp",
+      "baseName" : "quickhireapp",
+      "endOfLine" : "lf",
+      "indentSize" : 2,
+      "springConfigurationFormat" : "yaml",
+      "serverPort" : 8080
+    }
   } ]
 }
