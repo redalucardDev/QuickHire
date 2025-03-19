@@ -177,5 +177,17 @@
       "springConfigurationFormat" : "yaml",
       "serverPort" : 8080
     }
+  }, {
+    "module" : "spring-boot-tomcat",
+    "date" : "2025-03-19T14:17:18.059222800Z",
+    "properties" : {
+      "packageName" : "com.quickhire.app",
+      "projectName" : "quickhireapp",
+      "baseName" : "quickhireapp",
+      "endOfLine" : "lf",
+      "indentSize" : 2,
+      "springConfigurationFormat" : "yaml",
+      "serverPort" : 8080
+    }
   } ]
 }
