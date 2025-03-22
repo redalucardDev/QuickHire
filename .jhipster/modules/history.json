@@ -1,205 +1,212 @@
 {
-  "actions" : [ {
-    "module" : "init",
-    "date" : "2025-03-08T10:31:56.483604900Z",
-    "properties" : {
-      "packageName" : "com.quickhire.quickhire-app",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2
+  "actions": [
+    {
+      "module": "init",
+      "date": "2025-03-08T10:31:56.483604900Z",
+      "properties": {
+        "packageName": "com.quickhire.quickhire-app",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2
+      }
+    },
+    {
+      "module": "application-service-hexagonal-architecture-documentation",
+      "date": "2025-03-08T10:31:57.110411700Z",
+      "properties": {
+        "packageName": "com.quickhire.quickhire-app",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2
+      }
+    },
+    {
+      "module": "maven-java",
+      "date": "2025-03-08T10:31:57.407876700Z",
+      "properties": {
+        "packageName": "com.quickhire.quickhire-app",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2
+      }
+    },
+    {
+      "module": "java-base",
+      "date": "2025-03-08T10:31:57.650034100Z",
+      "properties": {
+        "packageName": "com.quickhire.quickhire-app",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2
+      }
+    },
+    {
+      "module": "init",
+      "date": "2025-03-08T10:37:41.095554700Z",
+      "properties": {
+        "packageName": "com.quickhire.quickhireapp",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2
+      }
+    },
+    {
+      "module": "application-service-hexagonal-architecture-documentation",
+      "date": "2025-03-08T10:37:41.259666700Z",
+      "properties": {
+        "packageName": "com.quickhire.quickhireapp",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2
+      }
+    },
+    {
+      "module": "maven-java",
+      "date": "2025-03-08T10:37:41.465043700Z",
+      "properties": {
+        "packageName": "com.quickhire.quickhireapp",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2
+      }
+    },
+    {
+      "module": "java-base",
+      "date": "2025-03-08T10:37:41.675231200Z",
+      "properties": {
+        "packageName": "com.quickhire.quickhireapp",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2
+      }
+    },
+    {
+      "module": "init",
+      "date": "2025-03-08T10:38:11.385458Z",
+      "properties": {
+        "packageName": "com.quickhire.app",
+        "projectName": "quickhire-app",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2
+      }
+    },
+    {
+      "module": "application-service-hexagonal-architecture-documentation",
+      "date": "2025-03-08T10:38:11.597986500Z",
+      "properties": {
+        "packageName": "com.quickhire.app",
+        "projectName": "quickhire-app",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2
+      }
+    },
+    {
+      "module": "maven-java",
+      "date": "2025-03-08T10:38:11.810036500Z",
+      "properties": {
+        "packageName": "com.quickhire.app",
+        "projectName": "quickhire-app",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2
+      }
+    },
+    {
+      "module": "java-base",
+      "date": "2025-03-08T10:38:12.067224300Z",
+      "properties": {
+        "packageName": "com.quickhire.app",
+        "projectName": "quickhire-app",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2
+      }
+    },
+    {
+      "module": "prettier",
+      "date": "2025-03-14T18:47:54.622333900Z",
+      "properties": {
+        "packageName": "com.quickhire.app",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2,
+        "springConfigurationFormat": "yaml"
+      }
+    },
+    {
+      "module": "jacoco-with-min-coverage-check",
+      "date": "2025-03-14T18:49:47.198835400Z",
+      "properties": {
+        "packageName": "com.quickhire.app",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2,
+        "springConfigurationFormat": "yaml"
+      }
+    },
+    {
+      "module": "spring-boot",
+      "date": "2025-03-19T14:17:16.757143Z",
+      "properties": {
+        "packageName": "com.quickhire.app",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2,
+        "springConfigurationFormat": "yaml",
+        "serverPort": 8080
+      }
+    },
+    {
+      "module": "logs-spy",
+      "date": "2025-03-19T14:17:17.477212200Z",
+      "properties": {
+        "packageName": "com.quickhire.app",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2,
+        "springConfigurationFormat": "yaml",
+        "serverPort": 8080
+      }
+    },
+    {
+      "module": "spring-boot-mvc-empty",
+      "date": "2025-03-19T14:17:17.737263700Z",
+      "properties": {
+        "packageName": "com.quickhire.app",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2,
+        "springConfigurationFormat": "yaml",
+        "serverPort": 8080
+      }
+    },
+    {
+      "module": "spring-boot-tomcat",
+      "date": "2025-03-19T14:17:18.059222800Z",
+      "properties": {
+        "packageName": "com.quickhire.app",
+        "projectName": "quickhireapp",
+        "baseName": "quickhireapp",
+        "endOfLine": "lf",
+        "indentSize": 2,
+        "springConfigurationFormat": "yaml",
+        "serverPort": 8080
+      }
     }
-  }, {
-    "module" : "application-service-hexagonal-architecture-documentation",
-    "date" : "2025-03-08T10:31:57.110411700Z",
-    "properties" : {
-      "packageName" : "com.quickhire.quickhire-app",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2
-    }
-  }, {
-    "module" : "maven-java",
-    "date" : "2025-03-08T10:31:57.407876700Z",
-    "properties" : {
-      "packageName" : "com.quickhire.quickhire-app",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2
-    }
-  }, {
-    "module" : "java-base",
-    "date" : "2025-03-08T10:31:57.650034100Z",
-    "properties" : {
-      "packageName" : "com.quickhire.quickhire-app",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2
-    }
-  }, {
-    "module" : "init",
-    "date" : "2025-03-08T10:37:41.095554700Z",
-    "properties" : {
-      "packageName" : "com.quickhire.quickhireapp",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2
-    }
-  }, {
-    "module" : "application-service-hexagonal-architecture-documentation",
-    "date" : "2025-03-08T10:37:41.259666700Z",
-    "properties" : {
-      "packageName" : "com.quickhire.quickhireapp",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2
-    }
-  }, {
-    "module" : "maven-java",
-    "date" : "2025-03-08T10:37:41.465043700Z",
-    "properties" : {
-      "packageName" : "com.quickhire.quickhireapp",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2
-    }
-  }, {
-    "module" : "java-base",
-    "date" : "2025-03-08T10:37:41.675231200Z",
-    "properties" : {
-      "packageName" : "com.quickhire.quickhireapp",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2
-    }
-  }, {
-    "module" : "init",
-    "date" : "2025-03-08T10:38:11.385458Z",
-    "properties" : {
-      "packageName" : "com.quickhire.app",
-      "projectName" : "quickhire-app",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2
-    }
-  }, {
-    "module" : "application-service-hexagonal-architecture-documentation",
-    "date" : "2025-03-08T10:38:11.597986500Z",
-    "properties" : {
-      "packageName" : "com.quickhire.app",
-      "projectName" : "quickhire-app",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2
-    }
-  }, {
-    "module" : "maven-java",
-    "date" : "2025-03-08T10:38:11.810036500Z",
-    "properties" : {
-      "packageName" : "com.quickhire.app",
-      "projectName" : "quickhire-app",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2
-    }
-  }, {
-    "module" : "java-base",
-    "date" : "2025-03-08T10:38:12.067224300Z",
-    "properties" : {
-      "packageName" : "com.quickhire.app",
-      "projectName" : "quickhire-app",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2
-    }
-  }, {
-    "module" : "prettier",
-    "date" : "2025-03-14T18:47:54.622333900Z",
-    "properties" : {
-      "packageName" : "com.quickhire.app",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2,
-      "springConfigurationFormat" : "yaml"
-    }
-  }, {
-    "module" : "jacoco-with-min-coverage-check",
-    "date" : "2025-03-14T18:49:47.198835400Z",
-    "properties" : {
-      "packageName" : "com.quickhire.app",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2,
-      "springConfigurationFormat" : "yaml"
-    }
-  }, {
-    "module" : "spring-boot",
-    "date" : "2025-03-19T14:17:16.757143Z",
-    "properties" : {
-      "packageName" : "com.quickhire.app",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2,
-      "springConfigurationFormat" : "yaml",
-      "serverPort" : 8080
-    }
-  }, {
-    "module" : "logs-spy",
-    "date" : "2025-03-19T14:17:17.477212200Z",
-    "properties" : {
-      "packageName" : "com.quickhire.app",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2,
-      "springConfigurationFormat" : "yaml",
-      "serverPort" : 8080
-    }
-  }, {
-    "module" : "spring-boot-mvc-empty",
-    "date" : "2025-03-19T14:17:17.737263700Z",
-    "properties" : {
-      "packageName" : "com.quickhire.app",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2,
-      "springConfigurationFormat" : "yaml",
-      "serverPort" : 8080
-    }
-  }, {
-    "module" : "spring-boot-tomcat",
-    "date" : "2025-03-19T14:17:18.059222800Z",
-    "properties" : {
-      "packageName" : "com.quickhire.app",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2,
-      "springConfigurationFormat" : "yaml",
-      "serverPort" : 8080
-    }
-  }, {
-    "module" : "spring-boot-cucumber-mvc",
-    "date" : "2025-03-19T14:17:18.508317300Z",
-    "properties" : {
-      "packageName" : "com.quickhire.app",
-      "projectName" : "quickhireapp",
-      "baseName" : "quickhireapp",
-      "endOfLine" : "lf",
-      "indentSize" : 2,
-      "springConfigurationFormat" : "yaml",
-      "serverPort" : 8080
-    }
-  } ]
+  ]
 }
