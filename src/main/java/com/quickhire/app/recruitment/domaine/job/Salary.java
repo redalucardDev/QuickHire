@@ -5,6 +5,6 @@ import java.math.BigDecimal;
 
 public record Salary(BigDecimal value) {
   public Salary {
-    Assert.notNull("value", value);
+    Assert.notNull("id", value);
   }
 }

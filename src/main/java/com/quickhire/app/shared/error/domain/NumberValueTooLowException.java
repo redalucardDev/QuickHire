@@ -64,6 +64,6 @@ public final class NumberValueTooLowException extends AssertionException {
 
   @Override
   public Map<String, String> parameters() {
-    return Map.of("min", min, "value", value);
+    return Map.of("min", min, "id", value);
   }
 }

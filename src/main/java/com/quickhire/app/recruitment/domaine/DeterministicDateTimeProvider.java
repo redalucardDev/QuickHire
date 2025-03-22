@@ -11,7 +11,7 @@ public class DeterministicDateTimeProvider implements DateTimeProvider {
   }
 
   @Override
-  public LocalDateTime now() {
+  public LocalDateTime dateTime() {
     return switch (currentDateTime) {
       case null -> throw new IllegalStateException("Current date is not set");
       default -> currentDateTime;

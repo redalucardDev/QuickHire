@@ -7,9 +7,6 @@ import java.time.ZoneId;
 public record Date(LocalDateTime value) {
   public Date {
     Assert.notNull("value", value);
-    if (!value.isBefore(LocalDateTime.now())) {
-      throw new IllegalArgumentException("Proposition value must be in the past");
-    }
   }
 
   boolean isMoreThanOneDayApart(LocalDateTime dateTime) {

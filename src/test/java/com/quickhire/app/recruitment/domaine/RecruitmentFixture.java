@@ -1,13 +1,17 @@
 package com.quickhire.app.recruitment.domaine;
 
-import com.quickhire.app.recruitment.domaine.contact.ContactInfo;
-import com.quickhire.app.recruitment.domaine.contact.Email;
-import com.quickhire.app.recruitment.domaine.contact.PhoneNumber;
+import com.quickhire.app.recruitment.domaine.application.Application;
+import com.quickhire.app.recruitment.domaine.application.ApplicationId;
+import com.quickhire.app.recruitment.domaine.events.DummyEventPublisher;
+import com.quickhire.app.recruitment.domaine.events.EventPublisher;
 import com.quickhire.app.recruitment.domaine.job.*;
+import com.quickhire.app.recruitment.domaine.personalInformations.*;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public class CandidateFixture {
+public class RecruitmentFixture {
+
+  private static final EventPublisher eventPublisher = new DummyEventPublisher();
 
   static Job createJob() {
     return new Job(
@@ -18,7 +22,7 @@ public class CandidateFixture {
   }
 
   static Candidate createCandidate() {
-    Candidate candidate = Candidate.builder()
+    return Candidate.builder()
       .id(CandidateId.newId())
       .personalInformations(
         new PersonalInformations(
@@ -26,9 +30,17 @@ public class CandidateFixture {
           new LastName("doe"),
           new ContactInfo(new Email("john.doe@gmail.com"), new PhoneNumber("+33662887766"))
         )
-      );
+      )
+      .eventPublisher(eventPublisher);
+  }
 
-    return candidate;
+  public static Application createApplicaion() {
+    ResumeId resumeId = ResumeId.newId();
+    return Application.builder()
+      .applicationId(ApplicationId.newId())
+      .jobId(JobId.newId())
+      .resumeId(resumeId)
+      .eventPublisher(eventPublisher);
   }
 
   static Candidate createCandidateWithResume() {

@@ -2,8 +2,8 @@ package com.quickhire.app.shared.error.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
 import com.quickhire.app.UnitTest;
+import org.junit.jupiter.api.Test;
 
 @UnitTest
 class NumberValueTooHighExceptionTest {
@@ -14,7 +14,7 @@ class NumberValueTooHighExceptionTest {
 
     assertThat(exception.type()).isEqualTo(AssertionErrorType.NUMBER_VALUE_TOO_HIGH);
     assertThat(exception.field()).isEqualTo("myField");
-    assertThat(exception.parameters()).containsOnly(entry("max", "42"), entry("value", "1337"));
+    assertThat(exception.parameters()).containsOnly(entry("max", "42"), entry("id", "1337"));
     assertThat(exception.getMessage()).isEqualTo("Value of field \"myField\" must be at most 42 but was 1337");
   }
 }

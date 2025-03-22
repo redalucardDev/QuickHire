@@ -4,6 +4,6 @@ import com.quickhire.app.shared.error.domain.Assert;
 
 public record Title(String value) {
   public Title {
-    Assert.notBlank("value", value);
+    Assert.notBlank("id", value);
   }
 }

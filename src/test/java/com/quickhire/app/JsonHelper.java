@@ -39,7 +39,7 @@ public final class JsonHelper {
     try {
       return jsonMapper.readValue(json, clazz);
     } catch (IOException e) {
-      throw new AssertionError("Error reading value from json: " + e.getMessage(), e);
+      throw new AssertionError("Error reading resumeId from json: " + e.getMessage(), e);
     }
   }
 }

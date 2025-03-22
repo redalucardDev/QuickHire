@@ -1,26 +1,34 @@
 package com.quickhire.app.recruitment.domaine;
 
+import com.quickhire.app.recruitment.domaine.application.Application;
+import com.quickhire.app.recruitment.domaine.application.ApplicationId;
+import com.quickhire.app.recruitment.domaine.events.EventPublisher;
 import com.quickhire.app.recruitment.domaine.job.Job;
+import com.quickhire.app.recruitment.domaine.job.JobId;
+import com.quickhire.app.recruitment.domaine.personalInformations.PersonalInformations;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Candidate {
 
   private final CandidateId id;
+
   public static final int MAX_PROPOSALS_PER_DAY = 3;
-  private final int MAX_APPLICATIONS = 3;
+  private static final int MAX_APPLICATIONS = 3;
 
   private final PersonalInformations personalInformations;
   private Resume resume;
 
   private final List<Application> applications = new ArrayList<>();
-  private final List<Job> declinedJobs = new ArrayList<>();
+  private final List<JobId> declinedJobs = new ArrayList<>();
   private final List<Proposal> receivedProposals = new ArrayList<>();
+  private final EventPublisher eventPublisher;
 
   public Candidate(CandidateBuilder candidateBuilder) {
     id = candidateBuilder.id;
     personalInformations = candidateBuilder.personalInformations;
     resume = candidateBuilder.resume;
+    this.eventPublisher = candidateBuilder.eventPublisher;
   }
 
   public static CandidateBuilder builder() {
@@ -31,33 +39,48 @@ public class Candidate {
     return applications;
   }
 
+  public List<Proposal> receivedProposals() {
+    return receivedProposals;
+  }
+
   public CandidateId id() {
     return id;
   }
 
   public List<Application> applyForAJob(Job job) {
     checkIfCanApplyToJob(job);
-    applications.add(new Application(job, resume));
+    applications.add(new Application(ApplicationId.newId(), job.jobId(), resume.resumeId(), eventPublisher));
     return applications;
   }
 
   private void checkIfCanApplyToJob(Job job) {
-    //TODO: Check application status
-    if (applications.stream().anyMatch(application -> application.job().equals(job))) {
-      throw new IllegalStateException("Candidate already applied for this job");
+    if (hasAlreadyAppliedForAJob(job)) {
+      throw new IllegalStateException("Candidate already applied for this jobId");
     }
 
-    if (declinedJobs.stream().anyMatch(declinedJob -> declinedJob.equals(job))) {
-      throw new IllegalStateException("Candidate has declined this job");
+    if (hasAlreadyDeclinedAJob(job)) {
+      throw new IllegalStateException("Candidate has declined this jobId");
     }
 
-    if (applications.size() >= MAX_APPLICATIONS) {
-      throw new IllegalStateException("Candidate already applied for 3 jobs");
+    if (getPendingApplicationsCount() >= MAX_APPLICATIONS) {
+      throw new IllegalStateException("Candidate has already pending application for 3 jobs");
     }
   }
 
+  private boolean hasAlreadyAppliedForAJob(Job job) {
+    return applications.stream().map(Application::jobId).toList().contains(job.jobId());
+  }
+
+  private boolean hasAlreadyDeclinedAJob(Job job) {
+    return declinedJobs.contains(job.jobId());
+  }
+
+  private long getPendingApplicationsCount() {
+    return applications.stream().filter(application -> application.status().equals(ApplicationStatus.PENDING)).count();
+  }
+
   public void declineJob(Job job) {
-    declinedJobs.add(job);
+    declinedJobs.add(job.jobId());
   }
 
   public Candidate resume(Resume resume) {
@@ -80,12 +103,9 @@ public class Candidate {
     return receivedProposals.get(receivedProposals.size() - 1).moreThanADay(deterministicDateTimePovider);
   }
 
-  public List<Proposal> receivedProposals() {
-    return receivedProposals;
-  }
+  public static class CandidateBuilder implements CandidateIdBuilder, PersonalInformationsBuilder, EventPublisherBuilder {
 
-  public static class CandidateBuilder implements CandidateIdBuilder, PersonalInformationsBuilder {
-
+    public EventPublisher eventPublisher;
     private CandidateId id;
     private Resume resume;
     private PersonalInformations personalInformations;
@@ -98,9 +118,14 @@ public class Candidate {
     }
 
     @Override
-    public Candidate personalInformations(PersonalInformations personalInformations) {
+    public EventPublisherBuilder personalInformations(PersonalInformations personalInformations) {
       this.personalInformations = personalInformations;
+      return this;
+    }
 
+    @Override
+    public Candidate eventPublisher(EventPublisher eventPublisher) {
+      this.eventPublisher = eventPublisher;
       return new Candidate(this);
     }
   }
@@ -110,6 +135,10 @@ public class Candidate {
   }
 
   public interface PersonalInformationsBuilder {
-    Candidate personalInformations(PersonalInformations personalInformations);
+    EventPublisherBuilder personalInformations(PersonalInformations personalInformations);
+  }
+
+  public static interface EventPublisherBuilder {
+    Candidate eventPublisher(EventPublisher eventPublisher);
   }
 }

@@ -1,4 +1,4 @@
-package com.quickhire.app.recruitment.domaine.contact;
+package com.quickhire.app.recruitment.domaine.personalInformations;
 
 public record ContactInfo(Email email, PhoneNumber phoneNumber) {
   public ContactInfo {

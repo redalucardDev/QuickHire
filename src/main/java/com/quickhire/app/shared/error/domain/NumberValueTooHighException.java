@@ -64,6 +64,6 @@ public final class NumberValueTooHighException extends AssertionException {
 
   @Override
   public Map<String, String> parameters() {
-    return Map.of("max", max, "value", value);
+    return Map.of("max", max, "id", value);
   }
 }

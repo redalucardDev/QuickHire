@@ -2,6 +2,7 @@ package com.quickhire.app.shared.error.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import com.quickhire.app.UnitTest;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Arrays;
@@ -13,7 +14,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import com.quickhire.app.UnitTest;
 
 @UnitTest
 class AssertTest {
@@ -122,7 +122,7 @@ class AssertTest {
 
     @Test
     void shouldValidateNotEmptyMap() {
-      assertThatCode(() -> Assert.notEmpty(FIELD_NAME, Map.of("key", "value"))).doesNotThrowAnyException();
+      assertThatCode(() -> Assert.notEmpty(FIELD_NAME, Map.of("key", "id"))).doesNotThrowAnyException();
     }
   }
 
@@ -161,15 +161,15 @@ class AssertTest {
 
     @Test
     void shouldValidateStringWithValueAsNotBlank() {
-      assertThatCode(() -> Assert.field(FIELD_NAME, "value").notBlank()).doesNotThrowAnyException();
+      assertThatCode(() -> Assert.field(FIELD_NAME, "id").notBlank()).doesNotThrowAnyException();
     }
 
     @Test
     void shouldNotValidateTooShortStringValue() {
-      assertThatThrownBy(() -> Assert.field(FIELD_NAME, "value").minLength(6))
+      assertThatThrownBy(() -> Assert.field(FIELD_NAME, "id").minLength(6))
         .isExactlyInstanceOf(StringTooShortException.class)
         .hasMessageContaining(String.valueOf(6))
-        .hasMessageContaining(String.valueOf("value".length()))
+        .hasMessageContaining(String.valueOf("id".length()))
         .hasMessageContaining(FIELD_NAME);
     }
 
@@ -183,7 +183,7 @@ class AssertTest {
     @ParameterizedTest
     @ValueSource(ints = { -1, 0 })
     void shouldValidateZeroOrNegativeMinLengthWithStringValue(int minLength) {
-      assertThatCode(() -> Assert.field(FIELD_NAME, "value").minLength(minLength)).doesNotThrowAnyException();
+      assertThatCode(() -> Assert.field(FIELD_NAME, "id").minLength(minLength)).doesNotThrowAnyException();
     }
 
     @ParameterizedTest
@@ -195,15 +195,15 @@ class AssertTest {
     @ParameterizedTest
     @ValueSource(ints = { 4, 5 })
     void shouldValidateLongEnoughString(int minLength) {
-      assertThatCode(() -> Assert.field(FIELD_NAME, "value").minLength(minLength)).doesNotThrowAnyException();
+      assertThatCode(() -> Assert.field(FIELD_NAME, "id").minLength(minLength)).doesNotThrowAnyException();
     }
 
     @Test
     void shouldNotValidateTooLongStringValue() {
-      assertThatThrownBy(() -> Assert.field(FIELD_NAME, "value").maxLength(4))
+      assertThatThrownBy(() -> Assert.field(FIELD_NAME, "id").maxLength(4))
         .isExactlyInstanceOf(StringTooLongException.class)
         .hasMessageContaining(String.valueOf(4))
-        .hasMessageContaining(String.valueOf("value".length()))
+        .hasMessageContaining(String.valueOf("id".length()))
         .hasMessageContaining(FIELD_NAME);
     }
 
@@ -215,7 +215,7 @@ class AssertTest {
     @ParameterizedTest
     @ValueSource(ints = { 5, 6 })
     void shouldValidateShortEnoughString(int maxLength) {
-      assertThatCode(() -> Assert.field(FIELD_NAME, "value").maxLength(maxLength)).doesNotThrowAnyException();
+      assertThatCode(() -> Assert.field(FIELD_NAME, "id").maxLength(maxLength)).doesNotThrowAnyException();
     }
   }
 
@@ -977,7 +977,7 @@ class AssertTest {
 
     @Test
     void shouldValidateCollectionWithElementAsNotEmpty() {
-      assertThatCode(() -> Assert.field(FIELD_NAME, List.of("value")).notEmpty()).doesNotThrowAnyException();
+      assertThatCode(() -> Assert.field(FIELD_NAME, List.of("id")).notEmpty()).doesNotThrowAnyException();
     }
 
     @Test
@@ -1077,7 +1077,7 @@ class AssertTest {
 
     @Test
     void shouldValidateCollectionWithElementAsNotEmpty() {
-      assertThatCode(() -> Assert.field(FIELD_NAME, new String[] { "value" }).notEmpty()).doesNotThrowAnyException();
+      assertThatCode(() -> Assert.field(FIELD_NAME, new String[] { "id" }).notEmpty()).doesNotThrowAnyException();
     }
 
     @Test

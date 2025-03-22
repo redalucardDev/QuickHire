@@ -1,7 +1,7 @@
 package com.quickhire.app.recruitment.domaine;
 
 public enum ApplicationStatus {
-  IN_PROGRESS,
+  PENDING,
   ACCEPTED,
   DECLINED,
 }

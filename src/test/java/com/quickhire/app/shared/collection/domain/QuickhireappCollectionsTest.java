@@ -2,6 +2,7 @@ package com.quickhire.app.shared.collection.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import com.quickhire.app.UnitTest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,7 +13,6 @@ import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import com.quickhire.app.UnitTest;
 
 @UnitTest
 class QuickhireappCollectionsTest {
@@ -33,10 +33,10 @@ class QuickhireappCollectionsTest {
     @Test
     void shouldGetImmutableCollectionFromMutableCollection() {
       Collection<String> input = new ArrayList<>();
-      input.add("value");
+      input.add("id");
       Collection<String> collection = QuickhireappCollections.immutable(input);
 
-      assertThat(collection).containsExactly("value");
+      assertThat(collection).containsExactly("id");
       assertThatThrownBy(collection::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
   }
@@ -57,10 +57,10 @@ class QuickhireappCollectionsTest {
     @Test
     void shouldGetImmutableCollectionFromMutableCollection() {
       Set<String> input = new HashSet<>();
-      input.add("value");
+      input.add("id");
       Set<String> set = QuickhireappCollections.immutable(input);
 
-      assertThat(set).containsExactly("value");
+      assertThat(set).containsExactly("id");
       assertThatThrownBy(set::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
   }
@@ -81,10 +81,10 @@ class QuickhireappCollectionsTest {
     @Test
     void shouldGetImmutableCollectionFromMutableCollection() {
       List<String> input = new ArrayList<>();
-      input.add("value");
+      input.add("id");
       List<String> list = QuickhireappCollections.immutable(input);
 
-      assertThat(list).containsExactly("value");
+      assertThat(list).containsExactly("id");
       assertThatThrownBy(list::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
   }
@@ -105,10 +105,10 @@ class QuickhireappCollectionsTest {
     @Test
     void shouldGetImmutableMapFromMutableMap() {
       Map<String, String> input = new HashMap<>();
-      input.put("key", "value");
+      input.put("key", "id");
       Map<String, String> map = QuickhireappCollections.immutable(input);
 
-      assertThat(map).containsExactly(Map.entry("key", "value"));
+      assertThat(map).containsExactly(Map.entry("key", "id"));
       assertThatThrownBy(map::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
   }

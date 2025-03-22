@@ -4,6 +4,6 @@ import com.quickhire.app.shared.error.domain.Assert;
 
 public record Description(String value) {
   public Description {
-    Assert.notNull("value", value);
+    Assert.notNull("id", value);
   }
 }
