@@ -295,7 +295,7 @@ public final class Assert {
    *
    * <pre>
    * <code>
-   * Assert.field("date", date)
+   * Assert.field("value", value)
    *   .inPast()
    *   .after(otherDate);
    * </code>
