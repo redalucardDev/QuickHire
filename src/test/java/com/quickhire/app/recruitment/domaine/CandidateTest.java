@@ -97,12 +97,8 @@ public class CandidateTest {
     for (int i = 0; i < Candidate.MAX_PROPOSALS_PER_DAY; i++) {
       candidate.receiveProposal(deterministicDateTimePovider, proposal);
     }
-    assertThrows(
-      IllegalStateException.class,
-      () -> {
-        candidate.receiveProposal(deterministicDateTimePovider, proposal);
-      },
-      "Candidate received 3 proposals for this day which is the maximum"
-    );
+    assertThatThrownBy(() -> candidate.receiveProposal(deterministicDateTimePovider, proposal))
+      .isInstanceOf(IllegalStateException.class)
+      .hasMessage("Candidate received 3 proposals for this day which is the maximum");
   }
 }
