@@ -5,6 +5,8 @@ import com.quickhire.app.recruitment.domaine.Message;
 import com.quickhire.app.recruitment.domaine.ResumeId;
 import com.quickhire.app.recruitment.domaine.events.EventPublisher;
 import com.quickhire.app.recruitment.domaine.events.OfferSendEvent;
+import com.quickhire.app.recruitment.domaine.interview.InterviewDuration;
+import com.quickhire.app.recruitment.domaine.interview.Interviews;
 import com.quickhire.app.recruitment.domaine.job.JobId;
 import com.quickhire.app.shared.error.domain.Assert;
 import java.time.LocalDateTime;
@@ -65,10 +67,14 @@ public class Application {
   }
 
   public Interviews scheduleInterview(LocalDateTime localDateTime) {
+    return scheduleInterview(localDateTime, InterviewDuration.ONE_HOUR);
+  }
+
+  public Interviews scheduleInterview(LocalDateTime localDateTime, InterviewDuration duration) {
     if (!status.equals(ApplicationStatus.PENDING)) {
       throw new IllegalStateException("Application is not pending");
     }
-    return interviews.schedule(localDateTime);
+    return interviews.schedule(localDateTime, duration);
   }
 
   public Offer accept(Message offerMessage) {

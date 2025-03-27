@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class CandidateTest {
 
-  private final DeterministicDateTimeProvider deterministicDateTimePovider = new DeterministicDateTimeProvider(
+  private final DeterministicDateTimeProvider deterministicDateTimeProvider = new DeterministicDateTimeProvider(
     LocalDateTime.of(2025, 3, 22, 0, 0)
   );
   private final Candidate candidate = RecruitmentFixture.createCandidateWithResume();
@@ -67,11 +67,11 @@ public class CandidateTest {
   void shouldReceiveProposalWhenMaxProposalsPerDayNotReached() {
     Job job = RecruitmentFixture.createJob();
 
-    Date date = new Date(LocalDateTime.of(2025, 3, 21, 0, 0));
+    DateTime dateTime = new DateTime(LocalDateTime.of(2025, 3, 21, 0, 0));
 
     candidate.receiveProposal(
-      deterministicDateTimePovider,
-      new Proposal(candidate.id(), job.jobId(), new Message("This is a message for a jobId proposal"), date)
+      deterministicDateTimeProvider,
+      new Proposal(candidate.id(), job.jobId(), new Message("This is a message for a jobId proposal"), dateTime)
     );
 
     assertThat(candidate.receivedProposals()).containsExactly(
@@ -79,7 +79,7 @@ public class CandidateTest {
         candidate.id(),
         job.jobId(),
         new Message("This is a message for a jobId proposal"),
-        new Date(LocalDateTime.of(2025, 3, 21, 0, 0))
+        new DateTime(LocalDateTime.of(2025, 3, 21, 0, 0))
       )
     );
   }
@@ -91,13 +91,13 @@ public class CandidateTest {
       candidate.id(),
       job.jobId(),
       new Message("This is a message for a jobId proposal"),
-      new Date(LocalDateTime.of(2025, 3, 21, 0, 0))
+      new DateTime(LocalDateTime.of(2025, 3, 21, 0, 0))
     );
 
     for (int i = 0; i < Candidate.MAX_PROPOSALS_PER_DAY; i++) {
-      candidate.receiveProposal(deterministicDateTimePovider, proposal);
+      candidate.receiveProposal(deterministicDateTimeProvider, proposal);
     }
-    assertThatThrownBy(() -> candidate.receiveProposal(deterministicDateTimePovider, proposal))
+    assertThatThrownBy(() -> candidate.receiveProposal(deterministicDateTimeProvider, proposal))
       .isInstanceOf(IllegalStateException.class)
       .hasMessage("Candidate received 3 proposals for this day which is the maximum");
   }

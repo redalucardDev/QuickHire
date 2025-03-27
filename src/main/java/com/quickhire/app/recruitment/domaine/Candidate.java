@@ -91,12 +91,12 @@ public class Candidate {
     return this;
   }
 
-  public void receiveProposal(DeterministicDateTimeProvider deterministicDateTimePovider, Proposal proposal) {
-    Assert.notNull("deterministicDateTimePovider", deterministicDateTimePovider);
+  public void receiveProposal(DeterministicDateTimeProvider deterministicDateTimeProvider, Proposal proposal) {
+    Assert.notNull("deterministicDateTimeProvider", deterministicDateTimeProvider);
     Assert.notNull("proposal", proposal);
     if (
       !receivedProposals.isEmpty() &&
-      isLastProposalMoreThanADay(deterministicDateTimePovider) &&
+      isLastProposalMoreThanADay(deterministicDateTimeProvider) &&
       receivedProposals.size() >= MAX_PROPOSALS_PER_DAY
     ) {
       throw new IllegalStateException("Candidate received 3 proposals for this day which is the maximum");
@@ -106,7 +106,8 @@ public class Candidate {
 
   private boolean isLastProposalMoreThanADay(DeterministicDateTimeProvider deterministicDateTimeProvider) {
     Assert.notNull("deterministicDateTimeProvider", deterministicDateTimeProvider);
-    return receivedProposals.get(receivedProposals.size() - 1).moreThanADay(deterministicDateTimeProvider);
+    Proposal lastProposal = receivedProposals.getLast();
+    return lastProposal.moreThanADay(deterministicDateTimeProvider);
   }
 
   public static class CandidateBuilder implements CandidateIdBuilder, PersonalInformationsBuilder, EventPublisherBuilder {

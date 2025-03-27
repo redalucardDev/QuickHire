@@ -17,4 +17,9 @@ public class DeterministicDateTimeProvider implements DateTimeProvider {
       default -> currentDateTime;
     };
   }
+
+  public DeterministicDateTimeProvider dateTime(LocalDateTime dateTime) {
+    this.currentDateTime = dateTime;
+    return this;
+  }
 }
