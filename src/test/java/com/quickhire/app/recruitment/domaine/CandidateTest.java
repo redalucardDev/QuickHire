@@ -51,7 +51,7 @@ public class CandidateTest {
   }
 
   @Test
-  void shoudDeclineProspectionMessage() {
+  void shouldDeclineProspectionMessage() {
     Job job = RecruitmentFixture.createJob();
     candidate.declineJob(job);
   }

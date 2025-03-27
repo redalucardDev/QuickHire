@@ -11,7 +11,8 @@ public record Proposal(CandidateId candidateId, JobId jobId, Message message, Da
     Assert.notNull("date", date);
   }
 
-  boolean moreThanADay(DeterministicDateTimeProvider deterministicDateTimePoviderForNow) {
-    return date().isMoreThanOneDayApart(deterministicDateTimePoviderForNow.dateTime());
+  boolean moreThanADay(DeterministicDateTimeProvider deterministicDateTimeProvider) {
+    Assert.notNull("deterministicDateTimeProvider", deterministicDateTimeProvider);
+    return date().isMoreThanOneDayApart(deterministicDateTimeProvider.dateTime());
   }
 }

@@ -6,6 +6,7 @@ import com.quickhire.app.recruitment.domaine.events.EventPublisher;
 import com.quickhire.app.recruitment.domaine.job.Job;
 import com.quickhire.app.recruitment.domaine.job.JobId;
 import com.quickhire.app.recruitment.domaine.personalInformations.PersonalInformations;
+import com.quickhire.app.shared.error.domain.Assert;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class Candidate {
   private final EventPublisher eventPublisher;
 
   public Candidate(CandidateBuilder candidateBuilder) {
+    Assert.notNull("candidateBuilder", candidateBuilder);
     id = candidateBuilder.id;
     personalInformations = candidateBuilder.personalInformations;
     resume = candidateBuilder.resume;
@@ -48,6 +50,7 @@ public class Candidate {
   }
 
   public List<Application> applyForAJob(Job job) {
+    Assert.notNull("job", job);
     checkIfCanApplyToJob(job);
     applications.add(new Application(ApplicationId.newId(), job.jobId(), resume.resumeId(), eventPublisher));
     return applications;
@@ -89,6 +92,8 @@ public class Candidate {
   }
 
   public void receiveProposal(DeterministicDateTimeProvider deterministicDateTimePovider, Proposal proposal) {
+    Assert.notNull("deterministicDateTimePovider", deterministicDateTimePovider);
+    Assert.notNull("proposal", proposal);
     if (
       !receivedProposals.isEmpty() &&
       isLastProposalMoreThanADay(deterministicDateTimePovider) &&
@@ -99,8 +104,9 @@ public class Candidate {
     receivedProposals.add(proposal);
   }
 
-  private boolean isLastProposalMoreThanADay(DeterministicDateTimeProvider deterministicDateTimePovider) {
-    return receivedProposals.get(receivedProposals.size() - 1).moreThanADay(deterministicDateTimePovider);
+  private boolean isLastProposalMoreThanADay(DeterministicDateTimeProvider deterministicDateTimeProvider) {
+    Assert.notNull("deterministicDateTimeProvider", deterministicDateTimeProvider);
+    return receivedProposals.get(receivedProposals.size() - 1).moreThanADay(deterministicDateTimeProvider);
   }
 
   public static class CandidateBuilder implements CandidateIdBuilder, PersonalInformationsBuilder, EventPublisherBuilder {
@@ -112,6 +118,7 @@ public class Candidate {
 
     @Override
     public CandidateBuilder id(CandidateId id) {
+      Assert.notNull("id", id);
       this.id = id;
 
       return this;
@@ -119,12 +126,14 @@ public class Candidate {
 
     @Override
     public EventPublisherBuilder personalInformations(PersonalInformations personalInformations) {
+      Assert.notNull("personalInformations", personalInformations);
       this.personalInformations = personalInformations;
       return this;
     }
 
     @Override
     public Candidate eventPublisher(EventPublisher eventPublisher) {
+      Assert.notNull("eventPublisher", eventPublisher);
       this.eventPublisher = eventPublisher;
       return new Candidate(this);
     }
@@ -138,7 +147,7 @@ public class Candidate {
     EventPublisherBuilder personalInformations(PersonalInformations personalInformations);
   }
 
-  public static interface EventPublisherBuilder {
+  public interface EventPublisherBuilder {
     Candidate eventPublisher(EventPublisher eventPublisher);
   }
 }

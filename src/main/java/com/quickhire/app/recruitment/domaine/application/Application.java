@@ -1,7 +1,6 @@
 package com.quickhire.app.recruitment.domaine.application;
 
 import com.quickhire.app.recruitment.domaine.ApplicationStatus;
-import com.quickhire.app.recruitment.domaine.Candidate;
 import com.quickhire.app.recruitment.domaine.Message;
 import com.quickhire.app.recruitment.domaine.ResumeId;
 import com.quickhire.app.recruitment.domaine.events.EventPublisher;
