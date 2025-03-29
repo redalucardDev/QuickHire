@@ -4,9 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 import com.quickhire.app.recruitment.domaine.application.Application;
-import com.quickhire.app.recruitment.domaine.application.ApplicationStatus;
-import com.quickhire.app.recruitment.domaine.application.Offer;
-import com.quickhire.app.recruitment.domaine.events.OfferSendEvent;
+import com.quickhire.app.recruitment.domaine.application.DeclinedApplicationState;
 import com.quickhire.app.recruitment.domaine.interview.InterviewDuration;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
@@ -25,14 +23,6 @@ public class ApplicationTest {
     assertThat(applicationWithScheduledInterview.interviews().values().getFirst().interviewDate().value()).isEqualTo(
       deterministicDateTimePovider.dateTime()
     );
-  }
-
-  @Test
-  void shouldNotScheduleInterviewIfApplicationIsNotPending() {
-    application.status(ApplicationStatus.ACCEPTED);
-    assertThatExceptionOfType(IllegalStateException.class)
-      .isThrownBy(() -> application.scheduleInterview(deterministicDateTimePovider.dateTime()))
-      .withMessage("Application is not pending");
   }
 
   @Test
@@ -75,8 +65,8 @@ public class ApplicationTest {
   }
 
   @Test
-  void shouldRejectApplication() {
-    assertThat(application.reject().status()).isEqualTo(ApplicationStatus.DECLINED);
+  void shouldDeclineApplication() {
+    assertThat(application.decline(new Message("This is a new decline message")).state()).isInstanceOf(DeclinedApplicationState.class);
   }
 
   @Test
@@ -84,17 +74,5 @@ public class ApplicationTest {
     assertThatExceptionOfType(IllegalStateException.class)
       .isThrownBy(() -> application.accept(new Message("This is a new offer")))
       .withMessage("2 interviews must be scheduled for this application to be accepted");
-  }
-
-  @Test
-  void shouldEmmitEventWhenApplicationIsAccepted() {
-    Application applicationWithScheduledInterviews = application
-      .scheduleInterview(deterministicDateTimePovider.dateTime())
-      .scheduleInterview(deterministicDateTimePovider.dateTime().plusDays(1));
-
-    Offer offer = applicationWithScheduledInterviews.accept(new Message("This is a new offer"));
-    assertThat(applicationWithScheduledInterviews.offerSentEvent()).isEqualTo(
-      new OfferSendEvent(offer.offerId(), offer.offerMessage(), offer.jobId())
-    );
   }
 }

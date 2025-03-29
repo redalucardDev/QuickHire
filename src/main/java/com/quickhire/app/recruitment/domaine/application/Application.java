@@ -2,8 +2,6 @@ package com.quickhire.app.recruitment.domaine.application;
 
 import com.quickhire.app.recruitment.domaine.Message;
 import com.quickhire.app.recruitment.domaine.ResumeId;
-import com.quickhire.app.recruitment.domaine.events.EventPublisher;
-import com.quickhire.app.recruitment.domaine.events.OfferSendEvent;
 import com.quickhire.app.recruitment.domaine.interview.InterviewDuration;
 import com.quickhire.app.recruitment.domaine.interview.Interviews;
 import com.quickhire.app.recruitment.domaine.job.JobId;
@@ -16,33 +14,18 @@ public class Application {
   private final ApplicationId applicationId;
   private final JobId jobId;
   private final ResumeId resumeId;
-  private ApplicationStatus status;
   private final Interviews interviews;
-  private OfferSendEvent offerSentEvent;
-  private final EventPublisher eventPublisher;
+  private final ApplicationState state;
 
-  public Application(ApplicationId applicationId, JobId jobId, ResumeId resumeId, EventPublisher eventPublisher, Interviews interviews) {
+  private Application(ApplicationId applicationId, JobId jobId, ResumeId resumeId, Interviews interviews, ApplicationState state) {
     Assert.notNull("jobId", jobId);
     Assert.notNull("resume", resumeId);
-    Assert.notNull("eventPublisher", eventPublisher);
+    Assert.notNull("interviews", interviews);
     this.applicationId = applicationId;
     this.jobId = jobId;
     this.resumeId = resumeId;
-    this.status = ApplicationStatus.PENDING;
-    this.eventPublisher = eventPublisher;
     this.interviews = interviews;
-  }
-
-  public Application(ApplicationBuilder applicationBuilder) {
-    Assert.notNull("jobId", applicationBuilder.jobId);
-    Assert.notNull("resume", applicationBuilder.resumeId);
-    Assert.notNull("eventPublisher", applicationBuilder.eventPublisher);
-    this.applicationId = applicationBuilder.applicationId;
-    this.jobId = applicationBuilder.jobId;
-    this.resumeId = applicationBuilder.resumeId;
-    this.eventPublisher = applicationBuilder.eventPublisher;
-    this.status = ApplicationStatus.PENDING;
-    this.interviews = new Interviews(new ArrayList<>(2));
+    this.state = state;
   }
 
   public JobId jobId() {
@@ -53,16 +36,8 @@ public class Application {
     return resumeId;
   }
 
-  public ApplicationStatus status() {
-    return status;
-  }
-
   public static ApplicationBuilder builder() {
     return new ApplicationBuilder();
-  }
-
-  public void status(ApplicationStatus status) {
-    this.status = status;
   }
 
   public Application scheduleInterview(LocalDateTime localDateTime) {
@@ -70,50 +45,38 @@ public class Application {
   }
 
   public Application scheduleInterview(LocalDateTime localDateTime, InterviewDuration duration) {
-    if (!status.equals(ApplicationStatus.PENDING)) {
-      throw new IllegalStateException("Application is not pending");
-    }
-    return new Application(applicationId, jobId, resumeId, eventPublisher, interviews.schedule(localDateTime, duration));
+    return state.scheduleInterview(localDateTime, duration, resumeId, interviews);
   }
 
   public Offer accept(Message offerMessage) {
-    if (!status.equals(ApplicationStatus.PENDING)) {
-      throw new IllegalStateException("Application is not pending");
-    }
     if (interviews.size() != 2) {
       throw new IllegalStateException("2 interviews must be scheduled for this application to be accepted");
     }
-    status(ApplicationStatus.ACCEPTED);
 
-    Offer offer = new Offer(OfferId.newId(), offerMessage, jobId);
-
-    offerSentEvent = new OfferSendEvent(offer.offerId(), offer.offerMessage(), offer.jobId());
-    eventPublisher.publish(offerSentEvent);
-    return offer;
+    return state.accept(offerMessage, jobId);
   }
 
-  public Application reject() {
-    if (!status.equals(ApplicationStatus.PENDING)) {
-      throw new IllegalStateException("Application is not pending");
-    }
-    status(ApplicationStatus.DECLINED);
-    return this;
-  }
-
-  public OfferSendEvent offerSentEvent() {
-    return offerSentEvent;
+  public Application decline(Message declineMessage) {
+    return state.decline(declineMessage, resumeId);
   }
 
   public Interviews interviews() {
     return interviews;
   }
 
-  public static class ApplicationBuilder implements ApplicationIdBuilder, JobIdBuilder, ResumeIdBuilder, EventPublisherBuilder {
+  public Application interviews(Interviews interviews) {
+    return new Application(applicationId, jobId, resumeId, interviews, state);
+  }
+
+  public ApplicationState state() {
+    return state;
+  }
+
+  public static class ApplicationBuilder implements ApplicationIdBuilder, JobIdBuilder, ResumeIdBuilder, ApplicationStateBuilder {
 
     private ApplicationId applicationId;
     private JobId jobId;
     private ResumeId resumeId;
-    private EventPublisher eventPublisher;
 
     @Override
     public JobIdBuilder applicationId(ApplicationId applicationId) {
@@ -135,9 +98,8 @@ public class Application {
     }
 
     @Override
-    public Application eventPublisher(EventPublisher eventPublisher) {
-      this.eventPublisher = eventPublisher;
-      return new Application(applicationId, jobId, resumeId, eventPublisher, new Interviews(new ArrayList<>(2)));
+    public Application state(ApplicationState state) {
+      return new Application(applicationId, jobId, resumeId, new Interviews(new ArrayList<>(2)), state);
     }
   }
 
@@ -150,10 +112,10 @@ public class Application {
   }
 
   public interface ResumeIdBuilder {
-    EventPublisherBuilder resumeId(ResumeId resumeId);
+    ApplicationStateBuilder resumeId(ResumeId resumeId);
   }
 
-  public interface EventPublisherBuilder {
-    Application eventPublisher(EventPublisher eventPublisher);
+  public interface ApplicationStateBuilder {
+    Application state(ApplicationState state);
   }
 }

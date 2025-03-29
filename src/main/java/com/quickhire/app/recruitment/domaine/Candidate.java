@@ -2,7 +2,7 @@ package com.quickhire.app.recruitment.domaine;
 
 import com.quickhire.app.recruitment.domaine.application.Application;
 import com.quickhire.app.recruitment.domaine.application.ApplicationId;
-import com.quickhire.app.recruitment.domaine.application.ApplicationStatus;
+import com.quickhire.app.recruitment.domaine.application.PendingApplicationState;
 import com.quickhire.app.recruitment.domaine.events.EventPublisher;
 import com.quickhire.app.recruitment.domaine.interview.Interviews;
 import com.quickhire.app.recruitment.domaine.job.Job;
@@ -55,7 +55,11 @@ public class Candidate {
     Assert.notNull("job", job);
     checkIfCanApplyToJob(job);
     applications.add(
-      new Application(ApplicationId.newId(), job.jobId(), resume.resumeId(), eventPublisher, new Interviews(new ArrayList<>(2)))
+      Application.builder()
+        .applicationId(ApplicationId.newId())
+        .jobId(job.jobId())
+        .resumeId(resume.resumeId())
+        .state(new PendingApplicationState(new Interviews(new ArrayList<>(2))))
     );
     return applications;
   }
@@ -83,7 +87,7 @@ public class Candidate {
   }
 
   private long getPendingApplicationsCount() {
-    return applications.stream().filter(application -> application.status().equals(ApplicationStatus.PENDING)).count();
+    return applications.stream().filter(application -> application.state() instanceof PendingApplicationState).count();
   }
 
   public void declineJob(Job job) {

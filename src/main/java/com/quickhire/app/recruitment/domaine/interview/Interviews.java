@@ -32,15 +32,11 @@ public record Interviews(List<Interview> values) {
     return add(new Interview(InterviewId.newId(), new DateTime(localDateTime), duration));
   }
 
-  private static boolean isNewInterviewOverlappingWithOldOne(
-    LocalDateTime localDateTime,
-    InterviewDuration duration,
-    Interview firstInterview
-  ) {
+  private boolean isNewInterviewOverlappingWithOldOne(LocalDateTime localDateTime, InterviewDuration duration, Interview firstInterview) {
     return localDateTime.isBefore(firstInterview.interviewDate().value().plus(duration.duration()));
   }
 
-  private static boolean isNewInterviewScheduledBeforeOldOne(LocalDateTime localDateTime, Interview firstInterview) {
+  private boolean isNewInterviewScheduledBeforeOldOne(LocalDateTime localDateTime, Interview firstInterview) {
     return localDateTime.isBefore(firstInterview.interviewDate().value());
   }
 
