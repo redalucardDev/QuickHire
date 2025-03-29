@@ -1,6 +1,5 @@
 package com.quickhire.app.recruitment.domaine.application;
 
-import com.quickhire.app.recruitment.domaine.ApplicationStatus;
 import com.quickhire.app.recruitment.domaine.Message;
 import com.quickhire.app.recruitment.domaine.ResumeId;
 import com.quickhire.app.recruitment.domaine.events.EventPublisher;
@@ -22,7 +21,7 @@ public class Application {
   private OfferSendEvent offerSentEvent;
   private final EventPublisher eventPublisher;
 
-  public Application(ApplicationId applicationId, JobId jobId, ResumeId resumeId, EventPublisher eventPublisher) {
+  public Application(ApplicationId applicationId, JobId jobId, ResumeId resumeId, EventPublisher eventPublisher, Interviews interviews) {
     Assert.notNull("jobId", jobId);
     Assert.notNull("resume", resumeId);
     Assert.notNull("eventPublisher", eventPublisher);
@@ -31,7 +30,7 @@ public class Application {
     this.resumeId = resumeId;
     this.status = ApplicationStatus.PENDING;
     this.eventPublisher = eventPublisher;
-    this.interviews = new Interviews(new ArrayList<>(2));
+    this.interviews = interviews;
   }
 
   public Application(ApplicationBuilder applicationBuilder) {
@@ -66,15 +65,15 @@ public class Application {
     this.status = status;
   }
 
-  public Interviews scheduleInterview(LocalDateTime localDateTime) {
+  public Application scheduleInterview(LocalDateTime localDateTime) {
     return scheduleInterview(localDateTime, InterviewDuration.ONE_HOUR);
   }
 
-  public Interviews scheduleInterview(LocalDateTime localDateTime, InterviewDuration duration) {
+  public Application scheduleInterview(LocalDateTime localDateTime, InterviewDuration duration) {
     if (!status.equals(ApplicationStatus.PENDING)) {
       throw new IllegalStateException("Application is not pending");
     }
-    return interviews.schedule(localDateTime, duration);
+    return new Application(applicationId, jobId, resumeId, eventPublisher, interviews.schedule(localDateTime, duration));
   }
 
   public Offer accept(Message offerMessage) {
@@ -103,6 +102,10 @@ public class Application {
 
   public OfferSendEvent offerSentEvent() {
     return offerSentEvent;
+  }
+
+  public Interviews interviews() {
+    return interviews;
   }
 
   public static class ApplicationBuilder implements ApplicationIdBuilder, JobIdBuilder, ResumeIdBuilder, EventPublisherBuilder {
@@ -134,7 +137,7 @@ public class Application {
     @Override
     public Application eventPublisher(EventPublisher eventPublisher) {
       this.eventPublisher = eventPublisher;
-      return new Application(applicationId, jobId, resumeId, eventPublisher);
+      return new Application(applicationId, jobId, resumeId, eventPublisher, new Interviews(new ArrayList<>(2)));
     }
   }
 

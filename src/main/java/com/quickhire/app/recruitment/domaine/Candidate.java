@@ -2,7 +2,9 @@ package com.quickhire.app.recruitment.domaine;
 
 import com.quickhire.app.recruitment.domaine.application.Application;
 import com.quickhire.app.recruitment.domaine.application.ApplicationId;
+import com.quickhire.app.recruitment.domaine.application.ApplicationStatus;
 import com.quickhire.app.recruitment.domaine.events.EventPublisher;
+import com.quickhire.app.recruitment.domaine.interview.Interviews;
 import com.quickhire.app.recruitment.domaine.job.Job;
 import com.quickhire.app.recruitment.domaine.job.JobId;
 import com.quickhire.app.recruitment.domaine.personalInformations.PersonalInformations;
@@ -52,7 +54,9 @@ public class Candidate {
   public List<Application> applyForAJob(Job job) {
     Assert.notNull("job", job);
     checkIfCanApplyToJob(job);
-    applications.add(new Application(ApplicationId.newId(), job.jobId(), resume.resumeId(), eventPublisher));
+    applications.add(
+      new Application(ApplicationId.newId(), job.jobId(), resume.resumeId(), eventPublisher, new Interviews(new ArrayList<>(2)))
+    );
     return applications;
   }
 

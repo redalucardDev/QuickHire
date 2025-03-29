@@ -3,6 +3,8 @@ package com.quickhire.app.recruitment.domaine.interview;
 import com.quickhire.app.recruitment.domaine.DateTime;
 import com.quickhire.app.shared.error.domain.Assert;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public record Interviews(List<Interview> values) {
@@ -11,10 +13,7 @@ public record Interviews(List<Interview> values) {
     if (values.size() > 2) {
       throw new IllegalArgumentException("Maximum number of interviews is 2");
     }
-  }
-
-  public Interviews schedule(LocalDateTime localDateTime) {
-    return schedule(localDateTime, InterviewDuration.ONE_HOUR);
+    values = Collections.unmodifiableList(new ArrayList<>(values));
   }
 
   public Interviews schedule(LocalDateTime localDateTime, InterviewDuration duration) {
@@ -30,8 +29,7 @@ public record Interviews(List<Interview> values) {
         throw new IllegalArgumentException("Cant schedule a second interview because of overlapping with the first interview");
       }
     }
-    values.add(new Interview(InterviewId.newId(), new DateTime(localDateTime), duration));
-    return this;
+    return add(new Interview(InterviewId.newId(), new DateTime(localDateTime), duration));
   }
 
   private static boolean isNewInterviewOverlappingWithOldOne(
@@ -56,5 +54,11 @@ public record Interviews(List<Interview> values) {
 
   public int size() {
     return values.size();
+  }
+
+  public Interviews add(Interview interview) {
+    List<Interview> newValues = new ArrayList<>(values);
+    newValues.add(interview);
+    return new Interviews(newValues);
   }
 }

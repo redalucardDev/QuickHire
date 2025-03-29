@@ -4,10 +4,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 import com.quickhire.app.recruitment.domaine.application.Application;
+import com.quickhire.app.recruitment.domaine.application.ApplicationStatus;
 import com.quickhire.app.recruitment.domaine.application.Offer;
 import com.quickhire.app.recruitment.domaine.events.OfferSendEvent;
 import com.quickhire.app.recruitment.domaine.interview.InterviewDuration;
-import com.quickhire.app.recruitment.domaine.interview.Interviews;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
@@ -20,9 +20,11 @@ public class ApplicationTest {
 
   @Test
   void shouldScheduleFirstAppointmentForInterview() {
-    Interviews interviews = application.scheduleInterview(deterministicDateTimePovider.dateTime());
-    assertThat(interviews.size()).isEqualTo(1);
-    assertThat(interviews.values().getFirst().interviewDate().value()).isEqualTo(deterministicDateTimePovider.dateTime());
+    Application applicationWithScheduledInterview = application.scheduleInterview(deterministicDateTimePovider.dateTime());
+    assertThat(applicationWithScheduledInterview.interviews().size()).isEqualTo(1);
+    assertThat(applicationWithScheduledInterview.interviews().values().getFirst().interviewDate().value()).isEqualTo(
+      deterministicDateTimePovider.dateTime()
+    );
   }
 
   @Test
@@ -35,22 +37,22 @@ public class ApplicationTest {
 
   @Test
   void shoulNotScheduleMoreThan2Interviews() {
-    Interviews interviews = application
+    Application applicationWithScheduledInterviews = application
       .scheduleInterview(deterministicDateTimePovider.dateTime())
-      .schedule(deterministicDateTimePovider.dateTime().plusDays(1));
+      .scheduleInterview(deterministicDateTimePovider.dateTime().plusDays(1));
     assertThatExceptionOfType(IllegalArgumentException.class)
-      .isThrownBy(() -> interviews.schedule(deterministicDateTimePovider.dateTime()))
+      .isThrownBy(() -> applicationWithScheduledInterviews.scheduleInterview(deterministicDateTimePovider.dateTime()))
       .withMessage("Maximum number of interviews is 2");
   }
 
   @Test
   void shouldNotNotSchedule2InterviewsWhenDatesAreOverlapping() {
-    Interviews interviews = application
+    Application applicationWithScheduledInterviews = application
       .scheduleInterview(deterministicDateTimePovider.dateTime())
-      .schedule(deterministicDateTimePovider.dateTime().plusDays(1));
+      .scheduleInterview(deterministicDateTimePovider.dateTime().plusDays(1));
 
     assertThatExceptionOfType(IllegalArgumentException.class)
-      .isThrownBy(() -> interviews.schedule(deterministicDateTimePovider.dateTime()))
+      .isThrownBy(() -> applicationWithScheduledInterviews.scheduleInterview(deterministicDateTimePovider.dateTime()))
       .withMessage("Maximum number of interviews is 2");
   }
 
@@ -65,10 +67,10 @@ public class ApplicationTest {
   void acceptApplication() {
     LocalDateTime firstInterviewStartDateTime = deterministicDateTimePovider.dateTime(LocalDateTime.of(2025, 3, 25, 13, 0)).dateTime();
     LocalDateTime secondInterviewStartDateTime = firstInterviewStartDateTime.plusMinutes(30);
-    Interviews interviews = application.scheduleInterview(firstInterviewStartDateTime, InterviewDuration.ONE_HOUR);
+    Application applicationWithScheduledInterview = application.scheduleInterview(firstInterviewStartDateTime, InterviewDuration.ONE_HOUR);
 
     assertThatExceptionOfType(IllegalArgumentException.class)
-      .isThrownBy(() -> interviews.schedule(secondInterviewStartDateTime))
+      .isThrownBy(() -> applicationWithScheduledInterview.scheduleInterview(secondInterviewStartDateTime))
       .withMessage("Cant schedule a second interview because of overlapping with the first interview");
   }
 
@@ -86,10 +88,13 @@ public class ApplicationTest {
 
   @Test
   void shouldEmmitEventWhenApplicationIsAccepted() {
-    application.scheduleInterview(deterministicDateTimePovider.dateTime());
-    application.scheduleInterview(deterministicDateTimePovider.dateTime().plusDays(1));
+    Application applicationWithScheduledInterviews = application
+      .scheduleInterview(deterministicDateTimePovider.dateTime())
+      .scheduleInterview(deterministicDateTimePovider.dateTime().plusDays(1));
 
-    Offer offer = application.accept(new Message("This is a new offer"));
-    assertThat(application.offerSentEvent()).isEqualTo(new OfferSendEvent(offer.offerId(), offer.offerMessage(), offer.jobId()));
+    Offer offer = applicationWithScheduledInterviews.accept(new Message("This is a new offer"));
+    assertThat(applicationWithScheduledInterviews.offerSentEvent()).isEqualTo(
+      new OfferSendEvent(offer.offerId(), offer.offerMessage(), offer.jobId())
+    );
   }
 }
