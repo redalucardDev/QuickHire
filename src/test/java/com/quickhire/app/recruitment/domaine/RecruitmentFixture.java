@@ -1,15 +1,12 @@
 package com.quickhire.app.recruitment.domaine;
 
-import com.quickhire.app.recruitment.domaine.application.Application;
 import com.quickhire.app.recruitment.domaine.application.ApplicationId;
-import com.quickhire.app.recruitment.domaine.application.PendingApplicationState;
+import com.quickhire.app.recruitment.domaine.application.PendingApplication;
 import com.quickhire.app.recruitment.domaine.events.DummyEventPublisher;
 import com.quickhire.app.recruitment.domaine.events.EventPublisher;
-import com.quickhire.app.recruitment.domaine.interview.Interviews;
 import com.quickhire.app.recruitment.domaine.job.*;
 import com.quickhire.app.recruitment.domaine.personalInformations.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class RecruitmentFixture {
@@ -37,13 +34,9 @@ public class RecruitmentFixture {
       .eventPublisher(eventPublisher);
   }
 
-  public static Application createApplicaion() {
+  public static PendingApplication createApplicaion() {
     ResumeId resumeId = ResumeId.newId();
-    return Application.builder()
-      .applicationId(ApplicationId.newId())
-      .jobId(JobId.newId())
-      .resumeId(resumeId)
-      .state(new PendingApplicationState(new Interviews(new ArrayList<>(2))));
+    return PendingApplication.builder().applicationId(ApplicationId.newId()).resumeId(resumeId).jobId(JobId.newId());
   }
 
   static Candidate createCandidateWithResume() {

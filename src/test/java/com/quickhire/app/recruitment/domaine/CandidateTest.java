@@ -3,7 +3,7 @@ package com.quickhire.app.recruitment.domaine;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.quickhire.app.recruitment.domaine.application.Application;
+import com.quickhire.app.recruitment.domaine.application.PendingApplication;
 import com.quickhire.app.recruitment.domaine.job.Job;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ public class CandidateTest {
 
     candidate.applyForAJob(job);
 
-    assertThat(candidate.appliedJobs()).extracting(Application::jobId).containsExactly(job.jobId());
+    assertThat(candidate.appliedJobs()).extracting(PendingApplication::jobId).containsExactly(job.jobId());
   }
 
   @Test
@@ -31,6 +31,14 @@ public class CandidateTest {
     candidate.applyForAJob(job);
 
     assertThrows(IllegalStateException.class, () -> candidate.applyForAJob(job), "Candidate already applied for this jobId");
+  }
+
+  @Test
+  void shouldBeAbleToCancelApplication() {
+    Job job = RecruitmentFixture.createJob();
+    candidate.applyForAJob(job);
+    candidate.declineJob(job);
+    assertThat(candidate.appliedJobs()).isEmpty();
   }
 
   @Test

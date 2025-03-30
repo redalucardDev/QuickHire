@@ -1,10 +1,8 @@
 package com.quickhire.app.recruitment.domaine;
 
-import com.quickhire.app.recruitment.domaine.application.Application;
 import com.quickhire.app.recruitment.domaine.application.ApplicationId;
-import com.quickhire.app.recruitment.domaine.application.PendingApplicationState;
+import com.quickhire.app.recruitment.domaine.application.PendingApplication;
 import com.quickhire.app.recruitment.domaine.events.EventPublisher;
-import com.quickhire.app.recruitment.domaine.interview.Interviews;
 import com.quickhire.app.recruitment.domaine.job.Job;
 import com.quickhire.app.recruitment.domaine.job.JobId;
 import com.quickhire.app.recruitment.domaine.personalInformations.PersonalInformations;
@@ -22,7 +20,7 @@ public class Candidate {
   private final PersonalInformations personalInformations;
   private Resume resume;
 
-  private final List<Application> applications = new ArrayList<>();
+  private final List<PendingApplication> pendingApplications = new ArrayList<>();
   private final List<JobId> declinedJobs = new ArrayList<>();
   private final List<Proposal> receivedProposals = new ArrayList<>();
   private final EventPublisher eventPublisher;
@@ -39,8 +37,8 @@ public class Candidate {
     return new CandidateBuilder();
   }
 
-  public List<Application> appliedJobs() {
-    return applications;
+  public List<PendingApplication> appliedJobs() {
+    return pendingApplications;
   }
 
   public List<Proposal> receivedProposals() {
@@ -51,17 +49,13 @@ public class Candidate {
     return id;
   }
 
-  public List<Application> applyForAJob(Job job) {
+  public List<PendingApplication> applyForAJob(Job job) {
     Assert.notNull("job", job);
     checkIfCanApplyToJob(job);
-    applications.add(
-      Application.builder()
-        .applicationId(ApplicationId.newId())
-        .jobId(job.jobId())
-        .resumeId(resume.resumeId())
-        .state(new PendingApplicationState(new Interviews(new ArrayList<>(2))))
+    pendingApplications.add(
+      PendingApplication.builder().applicationId(ApplicationId.newId()).resumeId(resume.resumeId()).jobId(job.jobId())
     );
-    return applications;
+    return pendingApplications;
   }
 
   private void checkIfCanApplyToJob(Job job) {
@@ -79,7 +73,7 @@ public class Candidate {
   }
 
   private boolean hasAlreadyAppliedForAJob(Job job) {
-    return applications.stream().map(Application::jobId).toList().contains(job.jobId());
+    return pendingApplications.stream().map(PendingApplication::jobId).toList().contains(job.jobId());
   }
 
   private boolean hasAlreadyDeclinedAJob(Job job) {
@@ -87,11 +81,12 @@ public class Candidate {
   }
 
   private long getPendingApplicationsCount() {
-    return applications.stream().filter(application -> application.state() instanceof PendingApplicationState).count();
+    return pendingApplications.size();
   }
 
   public void declineJob(Job job) {
     declinedJobs.add(job.jobId());
+    pendingApplications.removeIf(application -> application.jobId().equals(job.jobId()));
   }
 
   public Candidate resume(Resume resume) {

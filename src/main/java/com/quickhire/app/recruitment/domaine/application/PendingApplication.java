@@ -9,15 +9,14 @@ import com.quickhire.app.shared.error.domain.Assert;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Application {
+public class PendingApplication {
 
   private final ApplicationId applicationId;
   private final JobId jobId;
   private final ResumeId resumeId;
   private final Interviews interviews;
-  private final ApplicationState state;
 
-  private Application(ApplicationId applicationId, JobId jobId, ResumeId resumeId, Interviews interviews, ApplicationState state) {
+  private PendingApplication(ApplicationId applicationId, JobId jobId, ResumeId resumeId, Interviews interviews) {
     Assert.notNull("jobId", jobId);
     Assert.notNull("resume", resumeId);
     Assert.notNull("interviews", interviews);
@@ -25,7 +24,6 @@ public class Application {
     this.jobId = jobId;
     this.resumeId = resumeId;
     this.interviews = interviews;
-    this.state = state;
   }
 
   public JobId jobId() {
@@ -40,82 +38,73 @@ public class Application {
     return new ApplicationBuilder();
   }
 
-  public Application scheduleInterview(LocalDateTime localDateTime) {
+  public PendingApplication scheduleInterview(LocalDateTime localDateTime) {
     return scheduleInterview(localDateTime, InterviewDuration.ONE_HOUR);
   }
 
-  public Application scheduleInterview(LocalDateTime localDateTime, InterviewDuration duration) {
-    return state.scheduleInterview(localDateTime, duration, resumeId, interviews);
+  public PendingApplication scheduleInterview(LocalDateTime localDateTime, InterviewDuration duration) {
+    return PendingApplication.builder()
+      .applicationId(ApplicationId.newId())
+      .resumeId(resumeId)
+      .jobId(JobId.newId())
+      .interviews(interviews.schedule(localDateTime, duration));
   }
 
   public Offer accept(Message offerMessage) {
+    Assert.notNull("offerMessage", offerMessage);
     if (interviews.size() != 2) {
       throw new IllegalStateException("2 interviews must be scheduled for this application to be accepted");
     }
-
-    return state.accept(offerMessage, jobId);
+    return new AcceptedApplication(offerMessage, jobId).offer();
   }
 
-  public Application decline(Message declineMessage) {
-    return state.decline(declineMessage, resumeId);
+  public DeclinedApplication decline(Message declineMessage) {
+    return new DeclinedApplication(declineMessage);
   }
 
   public Interviews interviews() {
     return interviews;
   }
 
-  public Application interviews(Interviews interviews) {
-    return new Application(applicationId, jobId, resumeId, interviews, state);
+  public PendingApplication interviews(Interviews interviews) {
+    return new PendingApplication(applicationId, jobId, resumeId, interviews);
   }
 
-  public ApplicationState state() {
-    return state;
-  }
-
-  public static class ApplicationBuilder implements ApplicationIdBuilder, JobIdBuilder, ResumeIdBuilder, ApplicationStateBuilder {
+  public static class ApplicationBuilder implements ApplicationIdBuilder, JobIdBuilder, ResumeIdBuilder {
 
     private ApplicationId applicationId;
     private JobId jobId;
     private ResumeId resumeId;
 
     @Override
-    public JobIdBuilder applicationId(ApplicationId applicationId) {
+    public ResumeIdBuilder applicationId(ApplicationId applicationId) {
       this.applicationId = applicationId;
 
       return this;
     }
 
     @Override
-    public ApplicationBuilder resumeId(ResumeId resumeId) {
+    public JobIdBuilder resumeId(ResumeId resumeId) {
       this.resumeId = resumeId;
       return this;
     }
 
     @Override
-    public ResumeIdBuilder jobId(JobId jobId) {
+    public PendingApplication jobId(JobId jobId) {
       this.jobId = jobId;
-      return this;
-    }
-
-    @Override
-    public Application state(ApplicationState state) {
-      return new Application(applicationId, jobId, resumeId, new Interviews(new ArrayList<>(2)), state);
+      return new PendingApplication(applicationId, jobId, resumeId, new Interviews(new ArrayList<>(2)));
     }
   }
 
   public interface ApplicationIdBuilder {
-    JobIdBuilder applicationId(ApplicationId applicationId);
-  }
-
-  public interface JobIdBuilder {
-    ResumeIdBuilder jobId(JobId jobId);
+    ResumeIdBuilder applicationId(ApplicationId applicationId);
   }
 
   public interface ResumeIdBuilder {
-    ApplicationStateBuilder resumeId(ResumeId resumeId);
+    JobIdBuilder resumeId(ResumeId resumeId);
   }
 
-  public interface ApplicationStateBuilder {
-    Application state(ApplicationState state);
+  public interface JobIdBuilder {
+    PendingApplication jobId(JobId jobId);
   }
 }

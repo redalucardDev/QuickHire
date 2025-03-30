@@ -3,8 +3,8 @@ package com.quickhire.app.recruitment.domaine;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
-import com.quickhire.app.recruitment.domaine.application.Application;
-import com.quickhire.app.recruitment.domaine.application.DeclinedApplicationState;
+import com.quickhire.app.recruitment.domaine.application.DeclinedApplication;
+import com.quickhire.app.recruitment.domaine.application.PendingApplication;
 import com.quickhire.app.recruitment.domaine.interview.InterviewDuration;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
@@ -14,35 +14,37 @@ public class ApplicationTest {
   private final DeterministicDateTimeProvider deterministicDateTimePovider = new DeterministicDateTimeProvider(
     LocalDateTime.of(2025, 3, 25, 0, 0)
   );
-  private final Application application = RecruitmentFixture.createApplicaion();
+  private final PendingApplication pendingApplication = RecruitmentFixture.createApplicaion();
 
   @Test
   void shouldScheduleFirstAppointmentForInterview() {
-    Application applicationWithScheduledInterview = application.scheduleInterview(deterministicDateTimePovider.dateTime());
-    assertThat(applicationWithScheduledInterview.interviews().size()).isEqualTo(1);
-    assertThat(applicationWithScheduledInterview.interviews().values().getFirst().interviewDate().value()).isEqualTo(
+    PendingApplication pendingApplicationWithScheduledInterview = pendingApplication.scheduleInterview(
+      deterministicDateTimePovider.dateTime()
+    );
+    assertThat(pendingApplicationWithScheduledInterview.interviews().size()).isEqualTo(1);
+    assertThat(pendingApplicationWithScheduledInterview.interviews().values().getFirst().interviewDate().value()).isEqualTo(
       deterministicDateTimePovider.dateTime()
     );
   }
 
   @Test
   void shoulNotScheduleMoreThan2Interviews() {
-    Application applicationWithScheduledInterviews = application
+    PendingApplication pendingApplicationWithScheduledInterviews = pendingApplication
       .scheduleInterview(deterministicDateTimePovider.dateTime())
       .scheduleInterview(deterministicDateTimePovider.dateTime().plusDays(1));
     assertThatExceptionOfType(IllegalArgumentException.class)
-      .isThrownBy(() -> applicationWithScheduledInterviews.scheduleInterview(deterministicDateTimePovider.dateTime()))
+      .isThrownBy(() -> pendingApplicationWithScheduledInterviews.scheduleInterview(deterministicDateTimePovider.dateTime()))
       .withMessage("Maximum number of interviews is 2");
   }
 
   @Test
   void shouldNotNotSchedule2InterviewsWhenDatesAreOverlapping() {
-    Application applicationWithScheduledInterviews = application
+    PendingApplication pendingApplicationWithScheduledInterviews = pendingApplication
       .scheduleInterview(deterministicDateTimePovider.dateTime())
       .scheduleInterview(deterministicDateTimePovider.dateTime().plusDays(1));
 
     assertThatExceptionOfType(IllegalArgumentException.class)
-      .isThrownBy(() -> applicationWithScheduledInterviews.scheduleInterview(deterministicDateTimePovider.dateTime()))
+      .isThrownBy(() -> pendingApplicationWithScheduledInterviews.scheduleInterview(deterministicDateTimePovider.dateTime()))
       .withMessage("Maximum number of interviews is 2");
   }
 
@@ -57,22 +59,25 @@ public class ApplicationTest {
   void acceptApplication() {
     LocalDateTime firstInterviewStartDateTime = deterministicDateTimePovider.dateTime(LocalDateTime.of(2025, 3, 25, 13, 0)).dateTime();
     LocalDateTime secondInterviewStartDateTime = firstInterviewStartDateTime.plusMinutes(30);
-    Application applicationWithScheduledInterview = application.scheduleInterview(firstInterviewStartDateTime, InterviewDuration.ONE_HOUR);
+    PendingApplication pendingApplicationWithScheduledInterview = pendingApplication.scheduleInterview(
+      firstInterviewStartDateTime,
+      InterviewDuration.ONE_HOUR
+    );
 
     assertThatExceptionOfType(IllegalArgumentException.class)
-      .isThrownBy(() -> applicationWithScheduledInterview.scheduleInterview(secondInterviewStartDateTime))
+      .isThrownBy(() -> pendingApplicationWithScheduledInterview.scheduleInterview(secondInterviewStartDateTime))
       .withMessage("Cant schedule a second interview because of overlapping with the first interview");
   }
 
   @Test
   void shouldDeclineApplication() {
-    assertThat(application.decline(new Message("This is a new decline message")).state()).isInstanceOf(DeclinedApplicationState.class);
+    assertThat(pendingApplication.decline(new Message("This is a new decline message"))).isInstanceOf(DeclinedApplication.class);
   }
 
   @Test
   void shouldNotAcceptApplicationIfInterviewsAreNotScheduled() {
     assertThatExceptionOfType(IllegalStateException.class)
-      .isThrownBy(() -> application.accept(new Message("This is a new offer")))
+      .isThrownBy(() -> pendingApplication.accept(new Message("This is a new offer")))
       .withMessage("2 interviews must be scheduled for this application to be accepted");
   }
 }
