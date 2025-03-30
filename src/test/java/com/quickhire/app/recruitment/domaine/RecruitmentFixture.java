@@ -30,8 +30,7 @@ public class RecruitmentFixture {
           new LastName("doe"),
           new ContactInfo(new Email("john.doe@gmail.com"), new PhoneNumber("+33662887766"))
         )
-      )
-      .eventPublisher(eventPublisher);
+      );
   }
 
   public static PendingApplication createApplicaion() {

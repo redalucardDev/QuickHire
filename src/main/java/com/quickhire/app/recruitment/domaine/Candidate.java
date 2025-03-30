@@ -23,14 +23,12 @@ public class Candidate {
   private final List<PendingApplication> pendingApplications = new ArrayList<>();
   private final List<JobId> declinedJobs = new ArrayList<>();
   private final List<Proposal> receivedProposals = new ArrayList<>();
-  private final EventPublisher eventPublisher;
 
   public Candidate(CandidateBuilder candidateBuilder) {
     Assert.notNull("candidateBuilder", candidateBuilder);
     id = candidateBuilder.id;
     personalInformations = candidateBuilder.personalInformations;
     resume = candidateBuilder.resume;
-    this.eventPublisher = candidateBuilder.eventPublisher;
   }
 
   public static CandidateBuilder builder() {
@@ -113,9 +111,8 @@ public class Candidate {
     return lastProposal.moreThanADay(deterministicDateTimeProvider);
   }
 
-  public static class CandidateBuilder implements CandidateIdBuilder, PersonalInformationsBuilder, EventPublisherBuilder {
+  public static class CandidateBuilder implements CandidateIdBuilder, PersonalInformationsBuilder {
 
-    public EventPublisher eventPublisher;
     private CandidateId id;
     private Resume resume;
     private PersonalInformations personalInformations;
@@ -129,18 +126,12 @@ public class Candidate {
     }
 
     @Override
-    public EventPublisherBuilder personalInformations(PersonalInformations personalInformations) {
+    public Candidate personalInformations(PersonalInformations personalInformations) {
       Assert.notNull("personalInformations", personalInformations);
       this.personalInformations = personalInformations;
-      return this;
-    }
-
-    @Override
-    public Candidate eventPublisher(EventPublisher eventPublisher) {
-      Assert.notNull("eventPublisher", eventPublisher);
-      this.eventPublisher = eventPublisher;
       return new Candidate(this);
     }
+
   }
 
   public interface CandidateIdBuilder {
@@ -148,10 +139,7 @@ public class Candidate {
   }
 
   public interface PersonalInformationsBuilder {
-    EventPublisherBuilder personalInformations(PersonalInformations personalInformations);
+    Candidate personalInformations(PersonalInformations personalInformations);
   }
 
-  public interface EventPublisherBuilder {
-    Candidate eventPublisher(EventPublisher eventPublisher);
-  }
 }
